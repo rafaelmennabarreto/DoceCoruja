@@ -4,12 +4,19 @@ import {Container, Gradiente, Button, Label} from './styles';
 import AppBar from '../../components/appBar';
 import Pallet from '../../pallet';
 import {GoogleIcon} from '../../Icons';
+
+import {GoogleLogin} from '../../service/loginService';
+
 export default function Login() {
+  async function login() {
+    await GoogleLogin();
+  }
+
   return (
     <Container>
       <AppBar title="Doces Coruja" textAlign="center" />
       <Gradiente colors={[`${Pallet.ligthRed}`, `${Pallet.primaryColor}`]}>
-        <Button style={styles.boxShadow}>
+        <Button style={styles.boxShadow} onPress={login}>
           <GoogleIcon size={36} color="white" />
           <Label> Logar com conta do google </Label>
         </Button>
