@@ -7,10 +7,9 @@
  */
 
 import React from 'react';
-import Home from './src/pages/home';
-
+import Route from './src/Routes';
 const App = () => {
-  return <Home />;
+  return <Route />;
 };
 
 export default App;

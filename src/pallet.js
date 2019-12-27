@@ -3,6 +3,10 @@ class Pallet {
     return '#ef5350';
   }
 
+  get ligthRed() {
+    return '#ef9a9a';
+  }
+
   get appBarTextColor() {
     return '#ffebee';
   }
