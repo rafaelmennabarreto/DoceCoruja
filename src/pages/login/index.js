@@ -5,12 +5,14 @@ import AppBar from '../../components/appBar';
 import Pallet from '../../pallet';
 import {GoogleIcon} from '../../Icons';
 
-import {GoogleLogin} from '../../service/loginService';
+import {GoogleLogin, IsLogged} from '../../service/loginService';
 
 export default function Login({navigation}) {
   async function login() {
-    // await GoogleLogin();
-    navigation.navigate('Home');
+    await GoogleLogin();
+    if (await IsLogged()) {
+      navigation.navigate('Home');
+    }
   }
 
   return (
