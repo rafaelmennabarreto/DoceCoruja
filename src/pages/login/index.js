@@ -7,9 +7,10 @@ import {GoogleIcon} from '../../Icons';
 
 import {GoogleLogin} from '../../service/loginService';
 
-export default function Login() {
+export default function Login({navigation}) {
   async function login() {
-    await GoogleLogin();
+    // await GoogleLogin();
+    navigation.navigate('Home');
   }
 
   return (

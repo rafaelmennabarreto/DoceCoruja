@@ -13,6 +13,14 @@ export const BackIcon = props => {
 
 export const GoogleIcon = props => <Icon name="logo-google" {...props} />;
 
+export const CadastrarClientIcon = props => (
+  <Icon name="ios-person-add" {...props} />
+);
+
+export const CadastrarVendaIcon = props => <Icon name="ios-cash" {...props} />;
+
+export const PlusIcon = props => <Icon name="ios-add" {...props} />;
+
 const styles = StyleSheet.create({
   backButton: {
     paddingLeft: 15,
