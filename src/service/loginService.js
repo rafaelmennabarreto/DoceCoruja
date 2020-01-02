@@ -8,7 +8,8 @@ export const GoogleLogin = async () => {
       offlineAccess: true,
     });
 
-    await GoogleSignin.signIn();
+    const user = GoogleSignin.signIn();
+    return user;
   } catch (e) {
     console.error(e);
   }

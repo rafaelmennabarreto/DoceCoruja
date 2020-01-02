@@ -3,7 +3,7 @@ import {Text} from 'react-native';
 
 // import { Container } from './styles';
 
-export default function DisplayMoney({value}) {
+export default function DisplayMoney({prefix, value}) {
   function getValueMasked(moneyValue) {
     const valueString = [...moneyValue.toString()];
     var val = '';
@@ -18,17 +18,34 @@ export default function DisplayMoney({value}) {
 
     for (var x = 0; x < valueString.length; x++) {
       val += valueString[x];
-      if (x === valueString.length - 3) {
-        val += ',';
-      }
+      const stringSize = valueString.length;
 
-      if (x === valueString.length - 6) {
-        val += '.';
-      }
+      val = addSeparator(x, stringSize, 3, ',', val) || val;
+      val = addSeparator(x, stringSize, 6, '.', val) || val;
+      val = addSeparator(x, stringSize, 9, '.', val) || val;
+      val = addSeparator(x, stringSize, 12, '.', val) || val;
+      val = addSeparator(x, stringSize, 15, '.', val) || val;
     }
 
     return val;
   }
 
-  return <Text>R$ {getValueMasked(value)}</Text>;
+  function addSeparator(
+    positionToCompare,
+    actualPosition,
+    separatorPosition,
+    separator,
+    oldValue,
+  ) {
+    if (positionToCompare === actualPosition - separatorPosition) {
+      const val = oldValue + separator;
+      return val;
+    }
+  }
+
+  return (
+    <Text>
+      {prefix || 'R$'} {getValueMasked(value)}
+    </Text>
+  );
 }

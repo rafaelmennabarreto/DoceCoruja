@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
-import {Text} from 'react-native';
+import React from 'react';
+import {useSelector} from 'react-redux';
+
 import {Container} from './styles';
 
 import AppBar from '../../../components/appBar';
@@ -7,11 +8,18 @@ import FloatButtomGroup from '../../../components/floatButtomGroup';
 import InformationFiled from '../../../components/InformationField';
 
 export default function Home() {
+  const user = useSelector(state => state.User);
+
   return (
     <>
-      <AppBar title="Home" textAlign="center" />
+      <AppBar title={`Ola ${user.name}`} textAlign="left" />
       <Container>
-        <InformationFiled title="Valor a receber" value="R$ 85,00" />
+        <InformationFiled title="Total de vendas" value={53} />
+        <InformationFiled
+          title="Valor a receber"
+          value={900000}
+          isMonetary={true}
+        />
         <FloatButtomGroup />
       </Container>
     </>

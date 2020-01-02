@@ -1,7 +1,7 @@
 import {createActions, createReducer} from 'reduxsauce';
-import Factory from '../../factory/userFactory';
+import userFactory from '../../factory/userFactory';
 
-const INITIAL_STATE = Factory.generateUser();
+const INITIAL_STATE = userFactory.generateUser({});
 
 export const {Types, Creators} = createActions({
   addUser: ['user'],

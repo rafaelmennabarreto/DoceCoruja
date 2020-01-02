@@ -1,15 +1,14 @@
 import React from 'react';
-
 import {Container, LabelField, ValueField} from './styles';
 import DisplayMoney from '../../components/MaskMoney/displayMoney';
 
-export default function InformationField({title, value}) {
+export default function InformationField({title, value, isMonetary = false}) {
   return (
     <>
       <Container>
         <LabelField>{title || ''}</LabelField>
         <ValueField>
-          <DisplayMoney value={5} />
+          {isMonetary ? <DisplayMoney value={value} /> : value}
         </ValueField>
       </Container>
     </>
