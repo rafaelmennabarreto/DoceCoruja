@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import {StyleSheet, Animated, Text} from 'react-native';
+import {StyleSheet, Animated} from 'react-native';
+import {useNavigation} from 'react-navigation-hooks';
 import FloatingButton from '../floatingButtom';
 import {CadastrarClientIcon, CadastrarVendaIcon} from '../../Icons';
 import Pallet from '../../pallet';
@@ -9,6 +10,8 @@ import {PillText} from './styles';
 export default function FloatButtomGroup() {
   const [show, setShow] = useState(false);
   const [position, setPosition] = useState(new Animated.Value(0));
+
+  const {navigate} = useNavigation();
 
   const interPolateRotation = position.interpolate({
     inputRange: [0, 1],
@@ -34,6 +37,10 @@ export default function FloatButtomGroup() {
     setShow(!show);
   }
 
+  function goAddClient() {
+    console.log(navigate('Splash'));
+  }
+
   return (
     <>
       <FloatingButton display={true} onPress={toogleShow}>
@@ -52,6 +59,7 @@ export default function FloatButtomGroup() {
       </FloatingButton>
 
       <FloatingButton
+        onPress={goAddClient}
         display={show}
         bottom={85}
         width="auto"

@@ -12,8 +12,6 @@ export default function Home() {
       <AppBar title="Home" textAlign="center" />
       <Container>
         <InformationFiled title="Valor a receber" value="R$ 85,00" />
-        <InformationFiled title="Valor a receber" value="R$ 85,00" />
-        <InformationFiled title="Valor a receber" value="R$ 85,00" />
         <FloatButtomGroup />
       </Container>
     </>
