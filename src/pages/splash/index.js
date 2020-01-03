@@ -45,7 +45,7 @@ export default function Splash({navigation}) {
   useFocusEffect(init);
 
   return (
-    <Gradiente colors={[`${Pallet.ligthRed}`, `${Pallet.primaryColor}`]}>
+    <Gradiente colors={[`${Pallet.ligthBlue}`, `${Pallet.primaryColor}`]}>
       <Text>Doces coruja</Text>
     </Gradiente>
   );

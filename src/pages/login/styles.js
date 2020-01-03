@@ -18,7 +18,7 @@ export const Label = styled.Text`
 
 export const Button = styled.TouchableOpacity`
   width: 100%;
-  background: ${Pallet.primaryColor};
+  background: ${Pallet.googleButtonColor};
   align-items: center;
   border-radius: 5px;
   flex-direction: row;

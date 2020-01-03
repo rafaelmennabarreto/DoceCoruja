@@ -1,35 +1,51 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet} from 'react-native';
+import {useDispatch} from 'react-redux';
 import {Container, Gradiente, Button, Label} from './styles';
 import AppBar from '../../components/appBar';
 import Pallet from '../../pallet';
 import {GoogleIcon} from '../../Icons';
 
+import {Types} from '../../store/ducks/users';
+
 import {GoogleLogin, IsLogged} from '../../service/loginService';
 
+import userFactory from '../../factory/userFactory';
+import actionFactory from '../../factory/actionFactory';
+
 export default function Login({navigation}) {
-  const [err, setErr] = useState('');
+  const dispatch = useDispatch();
 
   async function login() {
     try {
-      await GoogleLogin();
+      const data = await GoogleLogin();
       if (await IsLogged()) {
+        dispatchUser(data.user);
         navigation.navigate('Home');
       }
     } catch (e) {
-      setErr(e.toString());
+      console.warn(e);
     }
+  }
+
+  function dispatchUser(user) {
+    console.warn(user);
+    dispatch(
+      actionFactory.generateActionPayload({
+        type: Types.ADD_USER,
+        payload: userFactory.generateUserByGoogleLoginResponse(user),
+      }),
+    );
   }
 
   return (
     <Container>
       <AppBar title="Doces Coruja" textAlign="center" />
-      <Gradiente colors={[`${Pallet.ligthRed}`, `${Pallet.primaryColor}`]}>
+      <Gradiente colors={[`${Pallet.ligthBlue}`, `${Pallet.primaryColor}`]}>
         <Button style={styles.boxShadow} onPress={login}>
           <GoogleIcon size={36} color="white" />
           <Label> Logar com conta do google </Label>
         </Button>
-        {err.length > 0 && <Label>{err}</Label>}
       </Gradiente>
     </Container>
   );
