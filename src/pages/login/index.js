@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {Container, Gradiente, Button, Label} from './styles';
 import AppBar from '../../components/appBar';
@@ -8,10 +8,16 @@ import {GoogleIcon} from '../../Icons';
 import {GoogleLogin, IsLogged} from '../../service/loginService';
 
 export default function Login({navigation}) {
+  const [err, setErr] = useState('');
+
   async function login() {
-    await GoogleLogin();
-    if (await IsLogged()) {
-      navigation.navigate('Home');
+    try {
+      await GoogleLogin();
+      if (await IsLogged()) {
+        navigation.navigate('Home');
+      }
+    } catch (e) {
+      setErr(e.toString());
     }
   }
 
@@ -23,6 +29,7 @@ export default function Login({navigation}) {
           <GoogleIcon size={36} color="white" />
           <Label> Logar com conta do google </Label>
         </Button>
+        {err.length > 0 && <Label>{err}</Label>}
       </Gradiente>
     </Container>
   );

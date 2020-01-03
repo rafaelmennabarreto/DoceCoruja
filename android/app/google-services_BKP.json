@@ -15,14 +15,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "146793610437-eg8sacd6m3fmqshtqfhe29cr6r9778pi.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.docecoruja",
-            "certificate_hash": "53df44e26864b77b2bfc0194889e8d75b6b32a66"
-          }
-        },
-        {
           "client_id": "146793610437-gl21p4goscmmkcgk35geudch6svtb3k9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

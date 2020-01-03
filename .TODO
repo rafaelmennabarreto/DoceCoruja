@@ -1,0 +1,27 @@
+Telas:
+  ✔ Splash @done(20-01-03 15:47)
+  ☐ Home
+  ☐ clientes
+  estabelecimentos:
+    ☐ listagem estabelecimentos
+      opcoes por estabelecimento:
+        ☐ realizar chamada
+        ☐ editar
+        ☐ excluir
+    ☐ filtrar lista por texto
+    ☐ float button cadastrar
+
+  ☐ caixa
+  ☐ registro
+  ☐ pendencias
+  drawer menu:
+    ☐ estabelecimentos
+    ☐ cliente
+    ☐ caixa
+    ☐ registro
+    ☐ pendencias
+
+
+
+
+
