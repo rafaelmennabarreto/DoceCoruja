@@ -1,14 +1,13 @@
-const generateUser = ({name, id, photoUrl}) => ({
-  id: id || 0,
-  name: name || '',
-  photoUrl: photoUrl || '',
-});
+import User from '../model/user';
 
-const generateUserByGoogleLoginResponse = user => ({
-  id: user.id || 0,
-  name: user.name || '',
-  photoUrl: user.photo || '',
-});
+const generateUser = ({name, id, photoUrl}) => new User({name, id, photoUrl});
+
+const generateUserByGoogleLoginResponse = user =>
+  new User({
+    id: user.id || 0,
+    name: user.name || '',
+    photoUrl: user.photo || '',
+  });
 
 export default {
   generateUser,
