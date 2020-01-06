@@ -1,12 +1,16 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
+import {useNavigation} from 'react-navigation-hooks';
 import {Container, Text} from './styles';
-import {BackIcon} from '../../Icons';
+import {BackIcon, MenuIcon} from '../../Icons';
 
 export default function AppBar(props) {
+  const {toggleDrawer} = useNavigation();
+
   return (
     <Container style={styles.boxShadow}>
-      {props.showIcon && <BackIcon {...props} />}
+      {props.showBackIcon && <BackIcon {...props} />}
+      {props.showMenuIcon && <MenuIcon {...props} onPress={toggleDrawer} />}
       {props.children || (
         <Text textAlign={props.textAlign}> {props.title} </Text>
       )}

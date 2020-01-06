@@ -1,6 +1,5 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
-
 import {Container} from './styles';
 
 import AppBar from '../../../components/appBar';
@@ -12,7 +11,7 @@ export default function Home() {
 
   return (
     <>
-      <AppBar title={`Ola ${user.name}`} textAlign="left" />
+      <AppBar title={`Ola ${user.name}`} textAlign="left" showMenuIcon={true} />
       <Container>
         <InformationFiled title="Total de vendas" value={53} />
         <InformationFiled

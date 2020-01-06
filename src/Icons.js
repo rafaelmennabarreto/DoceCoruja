@@ -11,6 +11,14 @@ export const BackIcon = props => {
   );
 };
 
+export const MenuIcon = props => {
+  return (
+    <TouchableOpacity style={styles.backButton} {...props}>
+      <Icon name="ios-menu" size={24} color={Pallet.appBarTextColor} />
+    </TouchableOpacity>
+  );
+};
+
 export const GoogleIcon = props => <Icon name="logo-google" {...props} />;
 
 export const CadastrarClientIcon = props => (
