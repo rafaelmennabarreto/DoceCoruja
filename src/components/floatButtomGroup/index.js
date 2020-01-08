@@ -37,8 +37,8 @@ export default function FloatButtomGroup() {
     setShow(!show);
   }
 
-  function goAddClient() {
-    console.log(navigate('Splash'));
+  function go(screen) {
+    console.log(navigate(screen));
   }
 
   return (
@@ -59,7 +59,6 @@ export default function FloatButtomGroup() {
       </FloatingButton>
 
       <FloatingButton
-        onPress={goAddClient}
         display={show}
         bottom={85}
         width="auto"
@@ -69,7 +68,7 @@ export default function FloatButtomGroup() {
       </FloatingButton>
 
       <FloatingButton
-        onPress={goAddClient}
+        onPress={() => go('')}
         display={show}
         bottom={145}
         width=""

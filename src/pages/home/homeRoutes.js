@@ -10,7 +10,7 @@ import {
 } from '../../Icons';
 
 import Main from './main';
-import Estabelecimentos from './estabelecimentos';
+import EstabelecimentoRoute from './estabelecimentos/estabelecimentosRoute';
 import Caixa from './caixa';
 import Clientes from './clientes';
 import Pendencias from './pendencias';
@@ -25,7 +25,7 @@ export const HomeRoutes = createDrawerNavigator(
       },
     },
     Estabelecimentos: {
-      screen: Estabelecimentos,
+      screen: EstabelecimentoRoute,
       navigationOptions: {
         drawerIcon: DrawerEstabelecimento,
       },
