@@ -67,6 +67,18 @@ export default function FloatButtomGroup() {
         <CadastrarClientIcon size={28} color={Pallet.appBarTextColor} />
         <PillText color={Pallet.appBarTextColor}>Cadastrar Cliente</PillText>
       </FloatingButton>
+
+      <FloatingButton
+        onPress={goAddClient}
+        display={show}
+        bottom={145}
+        width=""
+        style={styles.pill}>
+        <CadastrarClientIcon size={28} color={Pallet.appBarTextColor} />
+        <PillText color={Pallet.appBarTextColor}>
+          Cadastrar Estabelecimento
+        </PillText>
+      </FloatingButton>
     </>
   );
 }
@@ -74,8 +86,9 @@ export default function FloatButtomGroup() {
 const styles = StyleSheet.create({
   pill: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    width: 190,
+    justifyContent: 'flex-start',
+    paddingHorizontal: 15,
+    width: 240,
     height: 'auto',
     paddingVertical: 10,
     right: 25,
