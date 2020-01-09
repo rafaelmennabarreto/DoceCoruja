@@ -3,7 +3,6 @@ import {DrawerItems} from 'react-navigation-drawer';
 import {useSelector} from 'react-redux';
 import {Container, UserData, UserImage, Text} from './styles';
 import Pallet from '../../pallet';
-import {DrawerHome} from '../../Icons';
 
 const Drawer = props => {
   const user = useSelector(state => state.User);

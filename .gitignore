@@ -40,6 +40,7 @@ buck-out/
 \.buckd/
 *.keystore
 !debug.keystore
+!doces_coruja.keystore
 
 # fastlane
 #
