@@ -1,10 +1,10 @@
-import {createSwitchNavigator} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
 
 import Estabelecimento from './index';
 
-const EstabelecimentoRoutes = createSwitchNavigator(
+const EstabelecimentoRoutes = createStackNavigator(
   {
-    EstabelecimentoMain: Estabelecimento,
+    EstabelecimentoMain: {screen: Estabelecimento},
   },
   {
     initialRouteName: 'EstabelecimentoMain',
