@@ -10,9 +10,7 @@ export const EstabelecimentoService = _firebaseApp => ({
         .set(estabelecimento);
 
       return data;
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   },
 });
 

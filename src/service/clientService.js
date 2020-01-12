@@ -10,9 +10,7 @@ const clientService = _firebaseApp => ({
         .set(client);
 
       return savedData;
-    } catch (error) {
-      console.log(error.toString());
-    }
+    } catch (error) {}
   },
 });
 

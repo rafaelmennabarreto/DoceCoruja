@@ -3,6 +3,11 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import Pallet from './pallet';
 
+export const IconsNames = {
+  Estabelecimento: 'ios-business',
+  Phone: 'ios-phone-portrait',
+};
+
 export const BackIcon = props => {
   return (
     <TouchableOpacity style={styles.backButton} {...props}>
@@ -37,7 +42,11 @@ export const DrawerHome = props => (
 );
 
 export const DrawerEstabelecimento = props => (
-  <Icon name="ios-business" size={drawerIconSize} color={props.tintColor} />
+  <Icon
+    name={IconsNames.Estabelecimento}
+    size={drawerIconSize}
+    color={props.tintColor}
+  />
 );
 
 export const DrawerCaixa = props => (

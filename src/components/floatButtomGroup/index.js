@@ -38,7 +38,8 @@ export default function FloatButtomGroup() {
   }
 
   function go(screen) {
-    console.log(navigate(screen));
+    toogleShow();
+    navigate(screen);
   }
 
   return (
@@ -68,7 +69,7 @@ export default function FloatButtomGroup() {
       </FloatingButton>
 
       <FloatingButton
-        onPress={() => go('')}
+        onPress={() => go('CadastrarEstabelecimentos')}
         display={show}
         bottom={145}
         width=""
