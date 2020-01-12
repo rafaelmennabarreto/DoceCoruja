@@ -12,6 +12,7 @@ export const Container = styled.View`
 export const FormIcon = styled(Icon)`
   min-width: 20px;
   font-size: 38px;
+  text-align: center;
 `;
 
 export const FormInput = styled(Input)`

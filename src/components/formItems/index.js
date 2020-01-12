@@ -15,6 +15,7 @@ const FormItem = props => {
           value={props.value}
           onChangeText={t => changeText(t)}
           placeholder={props.placeHolder}
+          keyboardType={props.keyboardType || 'default'}
         />
       )}
     </Container>
@@ -26,6 +27,7 @@ FormItem.propTypes = {
   placeHolder: PropTypes.string,
   onChange: PropTypes.func,
   value: PropTypes.string,
+  keyboardType: PropTypes.oneOf(['numeric', 'decimal-pad', 'phone-pad']),
 };
 
 export default FormItem;

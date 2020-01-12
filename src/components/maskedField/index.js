@@ -30,6 +30,7 @@ const MaskedField = ({style, placeholder, onChange, mask}) => {
       value={value}
       placeholder={placeholder}
       onChangeText={changeText}
+      keyboardType="decimal-pad"
     />
   );
 };

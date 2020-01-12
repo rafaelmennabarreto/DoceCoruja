@@ -6,6 +6,7 @@ import Pallet from './pallet';
 export const IconsNames = {
   Estabelecimento: 'ios-business',
   Phone: 'ios-phone-portrait',
+  Location: 'ios-pin',
 };
 
 export const BackIcon = props => {
