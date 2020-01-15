@@ -1,11 +1,11 @@
 import Estabelecimento from '../model/estabelecimento';
 
-const generateEstabelecimentos = (idOwner, name, number, street) =>
+const generateEstabelecimentos = ({name, phone, number, street}) =>
   new Estabelecimento({
-    idOwner,
     name,
     number,
     street,
+    phone,
   });
 
 export default {

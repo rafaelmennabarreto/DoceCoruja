@@ -5,18 +5,33 @@ import {
   MainContainer,
   ButtonContainer,
 } from './styles';
-import {ComfirmButton} from '../../../../components/buttons';
+import {ConfirmButton} from '../../../../components/buttons';
 
 import AppBar from '../../../../components/appBar';
 import FormItem from '../../../../components/formItems';
 import MaskedField from '../../../../components/maskedField';
 import {IconsNames} from '../../../../Icons';
 
+import EstabelecimentoFactory from '../../../../factory/estabelecimentoFactory';
+import EstabelecimentoService from '../../../../service/estabelecimentoService';
+
 export default function CadastrarEstabelecimentos() {
   const [phone, setPhone] = useState('');
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const [street, setStreet] = useState('');
+
+  async function save() {
+    const estabelecimentoToSave = EstabelecimentoFactory.generateEstabelecimentos(
+      {
+        name,
+        number,
+        street,
+        phone,
+      },
+    );
+    const isSaved = await EstabelecimentoService.store(estabelecimentoToSave);
+  }
 
   return (
     <Container>
@@ -30,7 +45,6 @@ export default function CadastrarEstabelecimentos() {
           />
           <FormItem iconName={IconsNames.Phone}>
             <MaskedField
-              placeHolder="oi meu chapa"
               mask="(99)99999-9999"
               placeholder="ex .: (51)99999-9999"
               onChange={text => setPhone(text)}
@@ -44,7 +58,7 @@ export default function CadastrarEstabelecimentos() {
           />
 
           <FormItem
-            iconName={IconsNames.Estabelecimento}
+            iconName={IconsNames.Number}
             placeHolder="ex.: 1070"
             keyboardType="numeric"
             onChange={text => setNumber(text)}
@@ -52,7 +66,7 @@ export default function CadastrarEstabelecimentos() {
         </ItemContainer>
       </MainContainer>
       <ButtonContainer>
-        <ComfirmButton title="Salvar" />
+        <ConfirmButton title="Salvar" onPress={save} />
       </ButtonContainer>
     </Container>
   );

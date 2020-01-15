@@ -1,17 +1,24 @@
 import firebaseApp from '../db';
-const DB_REF = 'Estabelecimento/';
 
-export const EstabelecimentoService = _firebaseApp => ({
-  store: async estabelecimento => {
+class EstabelecimentoService {
+  constructor(FirebaseApp) {
+    this._firebaseApp = FirebaseApp.database().ref('Estabelecimento');
+  }
+
+  async store(estabelecimento) {
     try {
-      const data = await _firebaseApp
-        .database()
-        .ref(DB_REF)
-        .set(estabelecimento);
+      await this._firebaseApp.push(estabelecimento).key;
+    } catch (error) {
+      return false;
+    }
+  }
 
-      return data;
-    } catch (error) {}
-  },
-});
+  async getAll() {
+    try {
+    } catch (err) {
+      console.log(err);
+    }
+  }
+}
 
-export default EstabelecimentoService(firebaseApp);
+export default new EstabelecimentoService(firebaseApp);

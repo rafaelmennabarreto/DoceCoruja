@@ -1,8 +1,11 @@
 import React from 'react';
-import styled from 'styled-components/native';
 import {Button} from 'react-native-elements';
 import Pallet from '../../pallet';
 
-export const ComfirmButton = props => (
-  <Button {...props} buttonStyle={{backgroundColor: Pallet.primaryColor}} />
+export const ConfirmButton = props => (
+  <Button
+    {...props}
+    buttonStyle={{backgroundColor: Pallet.primaryColor}}
+    onPress={() => props.onPress && props.onPress()}
+  />
 );

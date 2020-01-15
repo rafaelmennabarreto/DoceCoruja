@@ -1,21 +1,13 @@
-import {
-  API_KEY,
-  AUTH_DOMAIN,
-  DATABASE_URL,
-  PROJECT_ID,
-  STORAGE_BUCKET,
-  MESSAGING_SENDER_ID,
-  APP_ID,
-} from 'react-native-dotenv';
+import env from '../../env';
 
 const firebaseConfig = {
-  apiKey: API_KEY,
-  authDomain: AUTH_DOMAIN,
-  databaseURL: DATABASE_URL,
-  projectId: PROJECT_ID,
-  storageBucket: STORAGE_BUCKET,
-  messagingSenderId: MESSAGING_SENDER_ID,
-  appId: APP_ID,
+  apiKey: env.API_KEY,
+  authDomain: env.AUTH_DOMAIN,
+  databaseURL: env.DATABASE_URL,
+  projectId: env.PROJECT_ID,
+  storageBucket: env.STORAGE_BUCKET,
+  messagingSenderId: env.MESSAGING_SENDER_ID,
+  appId: env.APP_ID,
 };
 
 export default firebaseConfig;

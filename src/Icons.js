@@ -7,6 +7,7 @@ export const IconsNames = {
   Estabelecimento: 'ios-business',
   Phone: 'ios-phone-portrait',
   Location: 'ios-pin',
+  Number: 'ios-paper',
 };
 
 export const BackIcon = props => {
