@@ -3,14 +3,13 @@ import {createActions, createReducer} from 'reduxsauce';
 const INITIAL_STATE = [];
 
 export const {Types, Creators} = createActions({
-  addEstabelecimento: ['estabelecimento'],
+  addEstabelecimento: ['Estabelecimentos'],
 });
 
-const addEstabelecimento = (state = INITIAL_STATE, action) => [
-  ...state,
-  action.payload,
-];
+const add = (state = INITIAL_STATE, action) => [...state, ...action.payload];
 
-export default createReducer({
-  [Types.ADD_ESTABELECIMENTO]: addEstabelecimento,
+console.log(Types.ADD_ESTABELECIMENTO);
+
+export default createReducer(INITIAL_STATE, {
+  [Types.ADD_ESTABELECIMENTO]: add,
 });
