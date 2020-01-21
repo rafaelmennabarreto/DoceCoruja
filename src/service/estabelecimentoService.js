@@ -9,7 +9,7 @@ class EstabelecimentoService {
     var valueToReturn = 0;
 
     await this._firebaseApp.limitToLast(1).once('value', item => {
-      if (item) {
+      if (item.hasChildren()) {
         const key = Object.keys(item.val())[0];
         const value = parseInt(key);
         valueToReturn = value + 1;

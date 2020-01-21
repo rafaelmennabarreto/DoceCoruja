@@ -31,7 +31,6 @@ export default function Estabelecimentos() {
     }
 
     const data = await EstabelecimentoService.getAll();
-    console.log(data);
     storeFetchedEstabelecimentos(data);
     setEstabelecimentos(data);
   }
