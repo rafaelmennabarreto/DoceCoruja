@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {useDispatch} from 'react-redux';
 import {
   Container,
   ItemContainer,
@@ -15,11 +16,16 @@ import {IconsNames} from '../../../../Icons';
 import EstabelecimentoFactory from '../../../../factory/estabelecimentoFactory';
 import EstabelecimentoService from '../../../../service/estabelecimentoService';
 
+import actionFactory from '../../../../factory/actionFactory';
+import {Types} from '../../../../store/ducks/estabelecimentos';
+
 export default function CadastrarEstabelecimentos() {
   const [phone, setPhone] = useState('');
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const [street, setStreet] = useState('');
+
+  const dispatch = useDispatch();
 
   async function save() {
     const estabelecimentoToSave = EstabelecimentoFactory.generateEstabelecimentos(
@@ -30,7 +36,30 @@ export default function CadastrarEstabelecimentos() {
         phone,
       },
     );
-    const isSaved = await EstabelecimentoService.store(estabelecimentoToSave);
+    const savedEstabelecimento = await EstabelecimentoService.store(
+      estabelecimentoToSave,
+    );
+
+    if (savedEstabelecimento) {
+      dispatchEstabelecimento(savedEstabelecimento);
+      clearFields();
+    }
+  }
+
+  function clearFields() {
+    setPhone('');
+    setName('');
+    setNumber('');
+    setStreet('');
+  }
+
+  function dispatchEstabelecimento(estabelecimento) {
+    dispatch(
+      actionFactory.generateActionPayload({
+        type: Types.ADD_ESTABELECIMENTO,
+        payload: estabelecimento,
+      }),
+    );
   }
 
   return (
