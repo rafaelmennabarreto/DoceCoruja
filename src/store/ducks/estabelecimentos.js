@@ -6,9 +6,7 @@ export const {Types, Creators} = createActions({
   addEstabelecimento: ['Estabelecimentos'],
 });
 
-const add = (state = INITIAL_STATE, action) => [...state, ...action.payload];
-
-console.log(Types.ADD_ESTABELECIMENTO);
+const add = (state = INITIAL_STATE, action) => [...state, action.payload];
 
 export default createReducer(INITIAL_STATE, {
   [Types.ADD_ESTABELECIMENTO]: add,

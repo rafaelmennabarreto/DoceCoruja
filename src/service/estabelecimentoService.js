@@ -39,9 +39,7 @@ class EstabelecimentoService {
         });
       });
       return data;
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   }
 }
 

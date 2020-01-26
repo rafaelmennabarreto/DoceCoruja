@@ -4,7 +4,19 @@ const maskField = mask => {
       return value;
     }
 
-    let valueToReturn = mask.replace(/9/g, '*');
+    let maskToUse = mask;
+
+    if (typeof mask === 'object') {
+      mask.sort().every(m => {
+        if (value.length <= m.length) {
+          maskToUse = m;
+          return false;
+        }
+        return true;
+      });
+    }
+
+    let valueToReturn = maskToUse.replace(/9/g, '*');
     const numbers = [...(value + '')];
 
     numbers.forEach(n => {
