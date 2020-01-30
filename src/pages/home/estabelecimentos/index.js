@@ -1,11 +1,9 @@
 import React, {useCallback, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {useFocusEffect} from 'react-navigation-hooks';
-import {Text} from 'react-native';
 import {Container, List} from './styles';
 import AppBar from '../../../components/appBar';
 import ListItemComponent from '../../../components/ListItemComponent';
-import SwiperMenu from '../../../components/swipeMenu';
 
 import EstabelecimentoService from '../../../service/estabelecimentoService';
 import ActionFactory from '../../../factory/actionFactory';
@@ -48,12 +46,11 @@ export default function Estabelecimentos() {
   return (
     <Container>
       <AppBar title={'Estabelecimentos'} textAlign="left" showMenuIcon={true} />
-      <SwiperMenu />
-      {/* <List
+      <List
         data={estabelecimentos}
         keyExtractor={item => item.id}
         renderItem={({item}) => <ListItemComponent item={item} />}
-      /> */}
+      />
     </Container>
   );
 }
