@@ -1,10 +1,18 @@
 import styled from 'styled-components/native';
+import Config from '../../config/systemConfig';
 
 export const Container = styled.View`
   width: 100%;
   padding: 10px;
-  height: 50px;
-  border-bottom-width: 2px;
+  border-bottom-width: 1px;
 `;
 
-export const Text = styled.Text``;
+export const ButtonContainer = styled.View`
+  flex: 1;
+  flex-direction: row;
+`;
+
+export const Text = styled.Text`
+  font-size: ${Config.fontSize};
+  font-weight: 900;
+`;

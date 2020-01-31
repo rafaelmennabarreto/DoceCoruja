@@ -49,7 +49,7 @@ export default function Estabelecimentos() {
       <List
         data={estabelecimentos}
         keyExtractor={item => item.id}
-        renderItem={({item}) => <ListItemComponent item={item} />}
+        renderItem={({item}) => <ListItemComponent key={item.id} item={item} />}
       />
     </Container>
   );

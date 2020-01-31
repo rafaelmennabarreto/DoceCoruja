@@ -15,6 +15,14 @@ class Pallet {
     return '#ef9a9a';
   }
 
+  get red700() {
+    return '#D32F2F';
+  }
+
+  get green500() {
+    return '#4CAF50';
+  }
+
   get appBarTextColor() {
     return '#ffebee';
   }
