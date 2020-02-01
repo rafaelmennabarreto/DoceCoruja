@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback, useContext} from 'react';
+import {useFocusEffect, useNavigation} from 'react-navigation-hooks';
 import {useDispatch} from 'react-redux';
 import {
   Container,
@@ -9,16 +10,15 @@ import {
 import {ConfirmButton} from '../../../../components/buttons';
 
 import AppBar from '../../../../components/appBar';
-import FormItem from '../../../../components/formItems';
+// import Formitem from '../../../../components/formitems';
+import Formitem from '../../../../components/formItems';
 import MaskedField from '../../../../components/maskedField';
 import {IconsNames} from '../../../../Icons';
 
 import EstabelecimentoFactory from '../../../../factory/estabelecimentoFactory';
-import EstabelecimentoService from '../../../../service/estabelecimentoService';
-
 import actionFactory from '../../../../factory/actionFactory';
+import EstabelecimentoService from '../../../../service/estabelecimentoService';
 import {Types} from '../../../../store/ducks/estabelecimentos';
-
 import {alert} from '../../../../service/alertService';
 
 export default function CadastrarEstabelecimentos() {
@@ -26,9 +26,41 @@ export default function CadastrarEstabelecimentos() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const [street, setStreet] = useState('');
-
+  const [screenTitle, setScreenTitle] = useState('');
+  const {getParam} = useNavigation();
+  const item = getParam('estabelecimento');
   const dispatch = useDispatch();
 
+  const initFieldsIfNeed = useCallback(loadFieldsValue, []);
+  const loadTitleBarName = useCallback(getTitleBarName, []);
+
+  useFocusEffect(loadTitleBarName);
+  useFocusEffect(initFieldsIfNeed);
+
+  function bindFieldsToSave(estabelecimento) {
+    item.name = estabelecimento.name;
+    item.number = estabelecimento.number;
+    item.street = estabelecimento.street;
+    item.phone = estabelecimento.phone;
+  }
+
+  function getTitleBarName() {
+    if (item) {
+      setScreenTitle('Editar Estabelecimento');
+    } else {
+      setScreenTitle('Cadastrar Estabelecimento');
+    }
+  }
+
+  function loadFieldsValue() {
+    console.log(item);
+    if (item) {
+      setName(item.name);
+      setPhone(item.phone);
+      setNumber(item.number);
+      setStreet(item.street);
+    }
+  }
   async function save() {
     if (!validateFields()) {
       return;
@@ -43,8 +75,12 @@ export default function CadastrarEstabelecimentos() {
       },
     );
 
+    if (item) {
+      bindFieldsToSave(estabelecimentoToSave);
+    }
+
     const savedEstabelecimento = await EstabelecimentoService.store(
-      estabelecimentoToSave,
+      item ? item : estabelecimentoToSave,
     );
 
     if (savedEstabelecimento) {
@@ -97,32 +133,32 @@ export default function CadastrarEstabelecimentos() {
 
   return (
     <Container>
-      <AppBar title="Cadastrar Estabelecimento" showBackIcon={true} />
+      <AppBar title={screenTitle} showBackIcon={true} />
       <MainContainer>
         <ItemContainer>
-          <FormItem
+          <Formitem
             value={name}
             iconName={IconsNames.Estabelecimento}
             placeHolder="ex .: Mercado Big drive"
             onChange={text => setName(text)}
           />
-          <FormItem iconName={IconsNames.Phone}>
+          <Formitem iconName={IconsNames.Phone}>
             <MaskedField
               value={phone}
               mask={['(99)99999-9999', '(99)9999-9999']}
               placeholder="ex .: (51)99999-9999"
               onChange={text => setPhone(text)}
             />
-          </FormItem>
+          </Formitem>
 
-          <FormItem
+          <Formitem
             value={street}
             iconName={IconsNames.Location}
             placeHolder="ex .: Dorival candido de oliveira"
             onChange={text => setStreet(text)}
           />
 
-          <FormItem
+          <Formitem
             value={number}
             iconName={IconsNames.Number}
             placeHolder="ex.: 1070"

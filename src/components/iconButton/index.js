@@ -7,9 +7,9 @@ function GenerateIcon({name, iconColor}) {
   return <Icon name={name} size={36} color={iconColor} />;
 }
 
-const IconButton = ({iconName, color, iconColor}) => {
+const IconButton = ({iconName, color, iconColor, onPress}) => {
   return (
-    <BaseButton color={color}>
+    <BaseButton color={color} onPress={onPress}>
       <GenerateIcon name={iconName} iconColor={iconColor} />
     </BaseButton>
   );
@@ -19,6 +19,7 @@ IconButton.propTypes = {
   iconName: proptypes.string,
   color: proptypes.string,
   iconColor: proptypes.string,
+  onPress: proptypes.func,
 };
 
 export default IconButton;

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Container, LabelField, ValueField} from './styles';
-import DisplayMoney from '../../components/maskMoney/displayMoney';
+import DisplayMoney from '../../components/MaskMoney/displayMoney';
 
 export default function InformationField({title, value, isMonetary = false}) {
   return (
