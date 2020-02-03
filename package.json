@@ -43,6 +43,7 @@
     "@babel/runtime": "^7.6.2",
     "@react-native-community/eslint-config": "^0.0.5",
     "babel-jest": "^24.9.0",
+    "babel-plugin-root-import": "6.4.1",
     "concurrently": "^5.0.2",
     "eslint": "^6.5.1",
     "jest": "^24.9.0",
