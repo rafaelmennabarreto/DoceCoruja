@@ -53,7 +53,6 @@ export default function CadastrarEstabelecimentos() {
   }
 
   function loadFieldsValue() {
-    console.log(item);
     if (item) {
       setName(item.name);
       setPhone(item.phone);
@@ -75,17 +74,30 @@ export default function CadastrarEstabelecimentos() {
       },
     );
 
-    if (item) {
-      bindFieldsToSave(estabelecimentoToSave);
-    }
-
-    const savedEstabelecimento = await EstabelecimentoService.store(
-      item ? item : estabelecimentoToSave,
+    const savedEstabelecimento = await persistEstabelecimento(
+      estabelecimentoToSave,
     );
 
     if (savedEstabelecimento) {
-      dispatchEstabelecimento(savedEstabelecimento);
-      clearFields();
+      const type = item
+        ? Types.UPDATE_ESTABELECIMENTO
+        : Types.ADD_ESTABELECIMENTO;
+
+      dispatchEstabelecimento(savedEstabelecimento, type);
+      item ? null : clearFields();
+    }
+  }
+
+  async function persistEstabelecimento(estabelecimentoToSave) {
+    if (item) {
+      bindFieldsToSave(estabelecimentoToSave);
+      const savedEstabelecimento = await EstabelecimentoService.update(item);
+      return savedEstabelecimento;
+    } else {
+      const savedEstabelecimento = await EstabelecimentoService.store(
+        estabelecimentoToSave,
+      );
+      return savedEstabelecimento;
     }
   }
 
@@ -96,10 +108,10 @@ export default function CadastrarEstabelecimentos() {
     setStreet('');
   }
 
-  function dispatchEstabelecimento(estabelecimento) {
+  function dispatchEstabelecimento(estabelecimento, type) {
     dispatch(
       actionFactory.generateActionPayload({
-        type: Types.ADD_ESTABELECIMENTO,
+        type: type,
         payload: estabelecimento,
       }),
     );

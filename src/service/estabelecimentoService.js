@@ -29,6 +29,15 @@ class EstabelecimentoService {
     }
   }
 
+  async update(estabelecimento) {
+    try {
+      await this._firebaseApp.child(estabelecimento.id).set(estabelecimento);
+      return estabelecimento;
+    } catch (erro) {
+      return false;
+    }
+  }
+
   async getAll() {
     try {
       const data = [];
