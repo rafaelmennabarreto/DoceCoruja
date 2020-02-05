@@ -81,7 +81,7 @@ export default function CadastrarEstabelecimentos() {
     if (savedEstabelecimento) {
       const type = item
         ? Types.UPDATE_ESTABELECIMENTO
-        : Types.ADD_ESTABELECIMENTO;
+        : Types.ADD_ONE_ESTABELECIMENTO;
 
       dispatchEstabelecimento(savedEstabelecimento, type);
       item ? null : clearFields();

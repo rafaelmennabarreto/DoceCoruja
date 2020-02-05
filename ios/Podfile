@@ -38,6 +38,8 @@ target 'DoceCoruja' do
 
   pod 'RNGoogleSignin', :path => '../node_modules/@react-native-community/google-signin'
 
+  pod 'lottie-react-native', :path => '../node_modules/lottie-react-native'
+
   target 'DoceCorujaTests' do
     inherit! :search_paths
     # Pods for testing

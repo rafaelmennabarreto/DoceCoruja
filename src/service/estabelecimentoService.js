@@ -50,6 +50,15 @@ class EstabelecimentoService {
       return data;
     } catch (err) {}
   }
+
+  async delete(estabelecimento) {
+    try {
+      await this._firebaseApp.child(estabelecimento.id).remove();
+      return estabelecimento;
+    } catch (erro) {
+      return false;
+    }
+  }
 }
 
 export default new EstabelecimentoService(firebaseApp);
