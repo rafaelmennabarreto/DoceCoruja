@@ -5,6 +5,7 @@ import {Container, List} from './styles';
 import AppBar from '../../../components/appBar';
 import ListItemComponent from '../../../components/ListItemComponent';
 import Loader from '~/components/loader';
+import FloatButtonBroup from '~/components/floatButtomGroup';
 
 import EstabelecimentoService from '../../../service/estabelecimentoService';
 import ActionFactory from '../../../factory/actionFactory';
@@ -77,6 +78,7 @@ export default function Estabelecimentos() {
         )}
       />
       <Loader display={showLoader} />
+      <FloatButtonBroup />
     </Container>
   );
 }
