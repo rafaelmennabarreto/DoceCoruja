@@ -10,8 +10,7 @@ export const {Types, Creators} = createActions({
   removeEstabelecimento: ['Estabelecimento'],
 });
 
-const add = (state = INITIAL_STATE, action) =>
-  [...state, ...action.payload].sort(sortByName);
+const add = (state = INITIAL_STATE, action) => action.payload.sort(sortByName);
 
 const addOne = (state = INITIAL_STATE, action) => {
   const newState = state;
