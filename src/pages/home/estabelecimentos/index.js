@@ -74,7 +74,12 @@ export default function Estabelecimentos() {
         extraData={refreshList}
         keyExtractor={item => item.id}
         renderItem={({item}) => (
-          <ListItemComponent key={item.id} item={item} onDelete={onDelete} />
+          <ListItemComponent
+            key={item.id}
+            item={item}
+            onDelete={onDelete}
+            isProcessing={status => setShowLoader(status)}
+          />
         )}
       />
       <Loader display={showLoader} />

@@ -30,19 +30,23 @@ const Buttons = ({item}) => {
     navigate('CadastrarEstabelecimentos', {estabelecimento: item});
   }
 
-  async function remove(estabelecimento, callBack) {
+  async function remove(estabelecimento, callBack, isProcessingCallback) {
+    isProcessingCallback(true);
     const estabelecimentoDeleted = await estabelecimentoService.delete(
       estabelecimento,
     );
     if (callBack) {
       callBack(estabelecimentoDeleted);
+      isProcessingCallback(false);
     }
-    callBack(estabelecimento);
+
+    isProcessingCallback(false);
+    // callBack(estabelecimento);
   }
 
   return (
     <ItemContext.Consumer>
-      {({onDelete}) => (
+      {({onDelete, isProcessing}) => (
         <ButtonContainer>
           <IconButton
             iconName="ios-call"
@@ -58,7 +62,7 @@ const Buttons = ({item}) => {
             iconName="ios-trash"
             color={Pallet.red700}
             iconColor=""
-            onPress={() => remove(item, onDelete)}
+            onPress={() => remove(item, onDelete, isProcessing)}
           />
         </ButtonContainer>
       )}
@@ -66,9 +70,9 @@ const Buttons = ({item}) => {
   );
 };
 
-const ListItemComponent = ({item, onDelete}) => {
+const ListItemComponent = ({item, onDelete, isProcessing}) => {
   return (
-    <ItemContext.Provider value={{onDelete}}>
+    <ItemContext.Provider value={{onDelete, isProcessing}}>
       <SwipeMenu
         detailsComponent={<Details item={item} />}
         buttonComponent={<Buttons item={item} />}
@@ -80,6 +84,7 @@ const ListItemComponent = ({item, onDelete}) => {
 ListItemComponent.propTypes = {
   item: propTypes.object,
   onDelete: propTypes.func,
+  isProcessing: propTypes.func,
 };
 
 export default ListItemComponent;

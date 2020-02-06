@@ -7,11 +7,17 @@ const maskField = mask => {
     let maskToUse = mask;
 
     if (typeof mask === 'object') {
-      mask.sort().every(m => {
+      mask.sort().every((m, i) => {
         if (value.length <= m.length) {
           maskToUse = m;
           return false;
         }
+
+        if (i + 1 === mask.length) {
+          maskToUse = m;
+          return false;
+        }
+
         return true;
       });
     }
