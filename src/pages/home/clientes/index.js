@@ -21,7 +21,6 @@ export default function Clientes() {
   }
 
   async function getAllUsers() {
-    console.log(clients);
     if (clients.length === 0) {
       const savedClients = await clientService.getAll();
       dispatchUser(savedClients, Types.ADD_USERS);

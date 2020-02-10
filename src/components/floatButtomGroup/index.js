@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {StyleSheet, Animated} from 'react-native';
 import {useNavigation} from 'react-navigation-hooks';
 import FloatingButton from '../floatingButtom';
@@ -21,6 +21,17 @@ export default function FloatButtomGroup() {
   const rotateStyle = {
     transform: [{rotate: interPolateRotation}],
   };
+
+  const init = useCallback(pageLoad, []);
+  useEffect(init, []);
+
+  function pageLoad() {
+    return function cleanup() {
+      if (show) {
+        toogleShow();
+      }
+    };
+  }
 
   function startRotate(value) {
     Animated.timing(position, {
