@@ -30,6 +30,18 @@ export default function CadastrarEstabelecimentos() {
   const item = getParam('cliente');
   const dispatch = useDispatch();
 
+  const titleInit = useCallback(selectTitle, []);
+
+  useFocusEffect(titleInit);
+
+  function selectTitle() {
+    if (item) {
+      setScreenTitle('Editar Cliente');
+    } else {
+      setScreenTitle('Cadastrar Cliente');
+    }
+  }
+
   function save() {
     const clientToSave = clientFactory.generateClient({
       name: name,

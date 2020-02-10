@@ -3,6 +3,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {useFocusEffect} from 'react-navigation-hooks';
 import {Container, List} from './styles';
 import AppBar from '../../../components/appBar';
+import FloatingButtonGroup from '~/components/floatButtomGroup';
 
 import actionFactory from '~/factory/actionFactory';
 import clientService from '~/service/clientService';
@@ -45,6 +46,7 @@ export default function Clientes() {
         keyExtractor={item => item.id}
         renderItem={() => {}}
       />
+      <FloatingButtonGroup />
     </Container>
   );
 }
