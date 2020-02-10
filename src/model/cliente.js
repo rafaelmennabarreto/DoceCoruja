@@ -1,8 +1,10 @@
 export default class Cliente {
-  constructor({id, name, idEstabelecimento}) {
-    this.id = id || 0;
-    this.idEstabelecimento = idEstabelecimento || '';
-    this.name = name || '';
-    this.createdAt = new Date();
+  constructor({id, name, idEstabelecimento, telefone, email, date}) {
+    this.id = id;
+    this.idEstabelecimento = idEstabelecimento;
+    this.name = name;
+    this.telefone = telefone;
+    this.email = email;
+    this.createdAt = date;
   }
 }

@@ -11,8 +11,8 @@ import {
 
 import Main from './main';
 import EstabelecimentoRoute from './estabelecimentos/estabelecimentosRoute';
+import ClientesRoute from './clientes/clientsRoute';
 import Caixa from './caixa';
-import Clientes from './clientes';
 import Pendencias from './pendencias';
 
 export const HomeRoutes = createDrawerNavigator(
@@ -37,7 +37,7 @@ export const HomeRoutes = createDrawerNavigator(
       },
     },
     Clientes: {
-      screen: Clientes,
+      screen: ClientesRoute,
       navigationOptions: {
         drawerIcon: DrawerClients,
       },

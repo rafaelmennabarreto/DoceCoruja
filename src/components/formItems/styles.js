@@ -10,7 +10,7 @@ export const Container = styled.View`
 `;
 
 export const FormIcon = styled(Icon)`
-  min-width: 20px;
+  min-width: 30px;
   font-size: 38px;
   text-align: center;
 `;

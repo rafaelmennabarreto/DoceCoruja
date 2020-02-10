@@ -60,6 +60,7 @@ export default function FloatButtomGroup() {
       </FloatingButton>
 
       <FloatingButton
+        onPress={() => go('CadastrarCliente')}
         display={show}
         bottom={85}
         width="auto"
