@@ -1,17 +1,21 @@
-import React, {useCallback} from 'react';
+import React, {useState, useCallback} from 'react';
+import {Text} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {useFocusEffect} from 'react-navigation-hooks';
 import {Container, List} from './styles';
 import AppBar from '../../../components/appBar';
+import Loader from '~/components/loader';
 import FloatingButtonGroup from '~/components/floatButtomGroup';
 
 import actionFactory from '~/factory/actionFactory';
 import clientService from '~/service/clientService';
+import {useDispatchSomeClients} from '~/util/personHooks/clientHook';
 
 import {Types} from '~/store/ducks/clients';
 export default function Clientes() {
-  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const clients = useSelector(state => state.Clients);
+  const dispatchSomeClients = useDispatchSomeClients();
   const load = useCallback(init, []);
 
   useFocusEffect(load);
@@ -21,19 +25,14 @@ export default function Clientes() {
   }
 
   async function getAllUsers() {
+    setLoading(true);
+
     if (clients.length === 0) {
       const savedClients = await clientService.getAll();
-      dispatchUser(savedClients, Types.ADD_USERS);
+      dispatchSomeClients(savedClients);
     }
-  }
 
-  function dispatchUser(payload, type) {
-    dispatch(
-      actionFactory.generateActionPayload({
-        payload,
-        type,
-      }),
-    );
+    setLoading(false);
   }
 
   return (
@@ -43,8 +42,9 @@ export default function Clientes() {
         data={clients}
         extraData={clients}
         keyExtractor={item => item.id}
-        renderItem={() => {}}
+        renderItem={({item}) => <Text>{item.name}</Text>}
       />
+      <Loader display={loading} />
       <FloatingButtonGroup />
     </Container>
   );

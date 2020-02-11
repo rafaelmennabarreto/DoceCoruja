@@ -4,7 +4,7 @@ const generateClient = ({id, name, idEstabelecimento, telefone, email}) =>
   new Client({
     id: id || 0,
     name: name || '',
-    idEstabelecimento: idEstabelecimento || '',
+    idEstabelecimento: idEstabelecimento || 0,
     telefone: telefone || '',
     email: email || '',
     date: new Date(),

@@ -11,8 +11,12 @@ const FormItem = props => {
     props.onPress && props.onPress();
   }
 
+  function containerPress() {
+    props.onContainerPress && props.onContainerPress();
+  }
+
   return (
-    <Container>
+    <Container onTouchStart={containerPress}>
       <FormIcon name={props.iconName} />
       {props.children || (
         <FormInput
@@ -33,6 +37,7 @@ FormItem.propTypes = {
   placeHolder: PropTypes.string,
   onChange: PropTypes.func,
   onPress: PropTypes.func,
+  onContainerPress: PropTypes.func,
   value: PropTypes.string,
   disabled: PropTypes.bool,
   keyboardType: PropTypes.oneOf(['numeric', 'decimal-pad', 'phone-pad']),

@@ -1,6 +1,5 @@
 import React, {useState, useCallback, useContext} from 'react';
 import {useFocusEffect, useNavigation} from 'react-navigation-hooks';
-import {useDispatch} from 'react-redux';
 import {
   Container,
   ItemContainer,
@@ -10,13 +9,15 @@ import {
 import {ConfirmButton} from '~/components/buttons';
 
 import AppBar from '~/components/appBar';
+import SelecionarEstabelecimentoModal from '~/components/selecionarEstabelecimentoModal';
 import Formitem from '~/components/formItems';
 import MaskedField from '~/components/maskedField';
 import {IconsNames} from '~/Icons';
 
-import actionFactory from '~/factory/actionFactory';
 import clientFactory from '~/factory/clientFactory';
+import {useDispatchOneClient} from '~/util/personHooks/clientHook';
 import {alert} from '~/service/alertService';
+import clientService from '~/service/clientService';
 
 export default function CadastrarEstabelecimentos() {
   const [phone, setPhone] = useState('');
@@ -26,9 +27,10 @@ export default function CadastrarEstabelecimentos() {
   const [mail, setMail] = useState('');
   const [estabelecimento, setEstabelecimento] = useState('');
   const [screenTitle, setScreenTitle] = useState('');
+  const [displayModal, setDisplayModal] = useState(false);
   const {getParam} = useNavigation();
+  const dispatchClient = useDispatchOneClient();
   const item = getParam('cliente');
-  const dispatch = useDispatch();
 
   const titleInit = useCallback(selectTitle, []);
 
@@ -42,13 +44,33 @@ export default function CadastrarEstabelecimentos() {
     }
   }
 
-  function save() {
+  async function save() {
     const clientToSave = clientFactory.generateClient({
       name: name,
       email: mail,
       telefone: phone,
-      idEstabelecimento: estabelecimento?.id,
+      idEstabelecimento: estabelecimento.id,
     });
+
+    const savedClient = await clientService.store(clientToSave);
+
+    if (savedClient) {
+      dispatchClient(savedClient);
+    }
+  }
+
+  function onSelectEstabelecimento(value) {
+    setEstabelecimento(value);
+    setDisplayModal(false);
+  }
+
+  function cleanFields() {
+    setPhone('');
+    setStreet('');
+    setName('');
+    setNumber('');
+    setMail('');
+    setEstabelecimento('');
   }
 
   return (
@@ -99,12 +121,18 @@ export default function CadastrarEstabelecimentos() {
             placeHolder="Selecione um estabelecimento"
             keyboardType="numeric"
             disabled={true}
+            onContainerPress={() => setDisplayModal(true)}
           />
         </ItemContainer>
       </MainContainer>
       <ButtonContainer>
-        <ConfirmButton title="Salvar" onPress={() => {}} />
+        <ConfirmButton title="Salvar" onPress={save} />
       </ButtonContainer>
+      <SelecionarEstabelecimentoModal
+        display={displayModal}
+        closePress={() => setDisplayModal(false)}
+        onSelectItem={onSelectEstabelecimento}
+      />
     </Container>
   );
 }

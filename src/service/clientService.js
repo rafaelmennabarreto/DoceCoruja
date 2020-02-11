@@ -19,9 +19,9 @@ class ClientService {
   }
   async store(client) {
     try {
-      client.id = await this.getLasteId();
-      await this._firebaseApp.child(client.id).set(client);
-      return client;
+      const clientToSave = {...client, id: await this.getLasteId()};
+      await this._firebaseApp.child(clientToSave.id).set(clientToSave);
+      return clientToSave;
     } catch (error) {
       return false;
     }
