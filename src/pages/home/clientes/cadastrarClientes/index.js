@@ -12,6 +12,7 @@ import AppBar from '~/components/appBar';
 import SelecionarEstabelecimentoModal from '~/components/selecionarEstabelecimentoModal';
 import Formitem from '~/components/formItems';
 import MaskedField from '~/components/maskedField';
+import Loader from '~/components/loader';
 import {IconsNames} from '~/Icons';
 
 import clientFactory from '~/factory/clientFactory';
@@ -28,6 +29,7 @@ export default function CadastrarEstabelecimentos() {
   const [estabelecimento, setEstabelecimento] = useState('');
   const [screenTitle, setScreenTitle] = useState('');
   const [displayModal, setDisplayModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const {getParam} = useNavigation();
   const dispatchClient = useDispatchOneClient();
   const item = getParam('cliente');
@@ -45,6 +47,7 @@ export default function CadastrarEstabelecimentos() {
   }
 
   async function save() {
+    setIsLoading(true);
     const clientToSave = clientFactory.generateClient({
       name: name,
       email: mail,
@@ -56,7 +59,10 @@ export default function CadastrarEstabelecimentos() {
 
     if (savedClient) {
       dispatchClient(savedClient);
+      cleanFields();
     }
+
+    setIsLoading(false);
   }
 
   function onSelectEstabelecimento(value) {
@@ -133,6 +139,7 @@ export default function CadastrarEstabelecimentos() {
         closePress={() => setDisplayModal(false)}
         onSelectItem={onSelectEstabelecimento}
       />
+      <Loader display={isLoading} />
     </Container>
   );
 }
