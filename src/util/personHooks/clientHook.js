@@ -27,3 +27,16 @@ export const useDispatchSomeClients = () => {
     );
   };
 };
+
+export const useRemoveOneClient = () => {
+  const dispatch = useDispatch();
+
+  return clients => {
+    dispatch(
+      actionFactory.generateActionPayload({
+        payload: clients,
+        type: Types.REMOVE_ONE_CLIENT,
+      }),
+    );
+  };
+};

@@ -1,21 +1,23 @@
 import React, {useState, useCallback} from 'react';
-import {Text} from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {useFocusEffect} from 'react-navigation-hooks';
 import {Container, List} from './styles';
 import AppBar from '../../../components/appBar';
 import Loader from '~/components/loader';
 import FloatingButtonGroup from '~/components/floatButtomGroup';
+import ListClientsComponent from '~/components/listClientsComponents';
 
-import actionFactory from '~/factory/actionFactory';
 import clientService from '~/service/clientService';
-import {useDispatchSomeClients} from '~/util/personHooks/clientHook';
+import {
+  useDispatchSomeClients,
+  useRemoveOneClient,
+} from '~/util/personHooks/clientHook';
 
-import {Types} from '~/store/ducks/clients';
 export default function Clientes() {
   const [loading, setLoading] = useState(false);
   const clients = useSelector(state => state.Clients);
   const dispatchSomeClients = useDispatchSomeClients();
+  const removeOneClient = useRemoveOneClient();
   const load = useCallback(init, []);
 
   useFocusEffect(load);
@@ -42,7 +44,13 @@ export default function Clientes() {
         data={clients}
         extraData={clients}
         keyExtractor={item => item.id}
-        renderItem={({item}) => <Text>{item.name}</Text>}
+        renderItem={({item}) => (
+          <ListClientsComponent
+            item={item}
+            onDelete={removeOneClient}
+            isProcessing={setLoading}
+          />
+        )}
       />
       <Loader display={loading} />
       <FloatingButtonGroup />
