@@ -1,25 +1,26 @@
 Telas:
   ✔ Splash @done(20-01-03 15:47)
   ☐ Home
-  ☐ clientes
+  ✔ clientes @done(20-02-26 16:43)
   estabelecimentos:
-    ☐ listagem estabelecimentos
+    ✔ listagem estabelecimentos @done(20-02-26 16:42)
       opcoes por estabelecimento:
-        ☐ realizar chamada
-        ☐ editar
-        ☐ excluir
+        ✔ realizar chamada @done(20-02-26 16:42)
+        ✔ editar @done(20-02-26 16:42)
+        ✔ excluir @done(20-02-26 16:42)
     ☐ filtrar lista por texto
-    ☐ float button cadastrar
+    ✔ float button cadastrar @done(20-02-26 16:42)
 
   ☐ caixa
   ☐ registro
   ☐ pendencias
+  ☐ vendas
   drawer menu:
-    ☐ estabelecimentos
-    ☐ cliente
-    ☐ caixa
-    ☐ registro
-    ☐ pendencias
+    ✔ estabelecimentos @done(20-02-26 16:42)
+    ✔ cliente @done(20-02-26 16:42)
+    ✔ caixa @done(20-02-26 16:42)
+    ✔ registro @done(20-02-26 16:42)
+    ✔ pendencias @done(20-02-26 16:42)
 
 
 

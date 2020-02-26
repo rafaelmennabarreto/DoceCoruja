@@ -49,7 +49,7 @@ const Buttons = ({item}) => {
           <IconButton
             iconName="ios-call"
             color={Pallet.secondaryColor}
-            onPress={() => makeCall(item.phone)}
+            onPress={() => makeCall(item.telefone)}
           />
           <IconButton
             iconName="ios-create"
