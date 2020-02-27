@@ -1,7 +1,7 @@
 import {createStackNavigator} from 'react-navigation-stack';
 
 import Estabelecimento from './index';
-import CadastrarEstabelecimentos from './CadastrarEstabelecimento';
+import CadastrarEstabelecimentos from './CadastrarEstabelecimento/index';
 
 const EstabelecimentoRoutes = createStackNavigator(
   {

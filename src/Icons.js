@@ -10,6 +10,10 @@ export const IconsNames = {
   Number: 'ios-paper',
   Mail: 'ios-mail',
   User: 'ios-person',
+  Money: 'ios-cash',
+  Description: 'ios-document',
+  Date: 'ios-calendar',
+  Clients: 'ios-contacts',
 };
 
 export const BackIcon = props => {

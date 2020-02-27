@@ -6,7 +6,7 @@ import {
   MainContainer,
   ButtonContainer,
 } from './styles';
-import {ConfirmButton} from '~/components/buttons';
+import ConfirmButton from '~/components/buttons';
 
 import AppBar from '~/components/appBar';
 import SelecionarEstabelecimentoModal from '~/components/selecionarEstabelecimentoModal';

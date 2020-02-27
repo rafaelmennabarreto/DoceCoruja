@@ -7,19 +7,19 @@ import {
   MainContainer,
   ButtonContainer,
 } from './styles';
-import {ConfirmButton} from '../../../../components/buttons';
+import ConfirmButton from '~/components/buttons';
 
-import AppBar from '../../../../components/appBar';
-// import Formitem from '../../../../components/formitems';
-import Formitem from '../../../../components/formItems';
-import MaskedField from '../../../../components/maskedField';
-import {IconsNames} from '../../../../Icons';
+import AppBar from '~/components/appBar';
+// import Formitem from '~/components/formitems';
+import Formitem from '~/components/formItems';
+import MaskedField from '~/components/maskedField';
+import {IconsNames} from '~/Icons';
 
-import EstabelecimentoFactory from '../../../../factory/estabelecimentoFactory';
-import actionFactory from '../../../../factory/actionFactory';
-import EstabelecimentoService from '../../../../service/estabelecimentoService';
-import {Types} from '../../../../store/ducks/estabelecimentos';
-import {alert} from '../../../../service/alertService';
+import EstabelecimentoFactory from '~/factory/estabelecimentoFactory';
+import actionFactory from '~/factory/actionFactory';
+import EstabelecimentoService from '~/service/estabelecimentoService';
+import {Types} from '~/store/ducks/estabelecimentos';
+import {alert} from '~/service/alertService';
 
 export default function CadastrarEstabelecimentos() {
   const [phone, setPhone] = useState('');

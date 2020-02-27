@@ -13,8 +13,11 @@ Telas:
 
   ☐ caixa
   ☐ registro
-  ☐ pendencias
-  ☐ vendas
+  pendencias:      
+    ✔ form de cadastro de venda @done(20-02-27 13:45)
+    ✔ service de vendas para comunicar com firebase @done(20-02-27 13:45)
+    ☐ implementar o crud na tela de pendencias
+
   drawer menu:
     ✔ estabelecimentos @done(20-02-26 16:42)
     ✔ cliente @done(20-02-26 16:42)
