@@ -18,12 +18,17 @@ Telas:
     ✔ service de vendas para comunicar com firebase @done(20-02-27 13:45)
     ☐ implementar o crud na tela de pendencias
 
+  cadastrar Vendas:
+    ☐ implementar selecione estabelecimento
+    ☐ implementar selecione cliente
+
   drawer menu:
     ✔ estabelecimentos @done(20-02-26 16:42)
     ✔ cliente @done(20-02-26 16:42)
     ✔ caixa @done(20-02-26 16:42)
     ✔ registro @done(20-02-26 16:42)
     ✔ pendencias @done(20-02-26 16:42)
+    ✔ quando usuario não tiver foto colocar uma imagem default. @done(20-03-25 11:16)
 
 
 

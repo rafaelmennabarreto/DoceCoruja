@@ -8,26 +8,29 @@ import propTypes from 'prop-types';
 import Loader from '~/components/loader';
 
 import Pallet from '~/pallet';
-import estabelecimentoService from '~/service/estabelecimentoService';
-import {useDispatchSomeEstabelecimentos} from '~/util/personHooks/estabelecimentoHook';
+import clienteService from '~/service/clientService';
+import {useDispatchSomeClients} from '~/util/personHooks/clientHook';
 
-const SelecionarEstabelecimento = ({display, closePress, onSelectItem}) => {
-  const estabelecimentos = useSelector(state => state.Estabelecimentos);
-  const [filterText, setFilterText] = useState('');
-  const [filterEstabelecimento, setFilterEstabelecimento] = useState([]);
+const SelecionarCliente = ({
+  display,
+  closePress,
+  onSelectItem,
+  estabelecimentoId,
+}) => {
+  const clientes = useSelector(state => state.Clients);
   const [displaLoader, setDisplaLoader] = useState(false);
-  const dipatchSomeEstabelecimentos = useDispatchSomeEstabelecimentos();
+  const [filterText, setFilterText] = useState('');
+  const [filteredClientes, setFilterClientes] = useState([]);
+  const dipatchSomeClients = useDispatchSomeClients();
 
   async function init() {
     setDisplaLoader(true);
-    if (estabelecimentos.length === 0) {
-      const savedEstebelecimentos = await estabelecimentoService.getAll();
-      savedEstebelecimentos
-        ? dipatchSomeEstabelecimentos(savedEstebelecimentos)
-        : null;
-      setFilterEstabelecimento(savedEstebelecimentos);
+    if (clientes.length === 0) {
+      const savedClients = await clienteService.getAll();
+      savedClients ? dipatchSomeClients(savedClients) : null;
+      runFilterClients(savedClients);
     } else {
-      setFilterEstabelecimento(estabelecimentos);
+      runFilterClients(clientes);
     }
 
     setDisplaLoader(false);
@@ -37,13 +40,31 @@ const SelecionarEstabelecimento = ({display, closePress, onSelectItem}) => {
     onSelectItem && onSelectItem(item);
   }
 
-  function filterEstabelecimentos(text) {
-    const filteredEstabelecimentos = estabelecimentos.filter(c =>
-      c.name.toUpperCase().match(text.toUpperCase()),
-    );
+  function runFilterClients(clients) {
+    if (estabelecimentoId) {
+      setFilterClientes(
+        clients.filter(c => c.idEstabelecimento === estabelecimentoId),
+      );
+    } else {
+      clients.length > 0 && setFilterClientes(clients);
+    }
+  }
 
+  function filterClients(text) {
+    if (estabelecimentoId) {
+      const filteredClients = clientes.filter(
+        c =>
+          c.idEstabelecimento === estabelecimentoId &&
+          c.name.toUpperCase().match(text.toUpperCase()),
+      );
+      setFilterClientes(filteredClients);
+    } else {
+      const filteredClients = clientes.filter(c =>
+        c.name.toUpperCase().match(text.toUpperCase()),
+      );
+      setFilterClientes(filteredClients);
+    }
     setFilterText(text);
-    setFilterEstabelecimento(filteredEstabelecimentos);
   }
 
   return (
@@ -57,11 +78,11 @@ const SelecionarEstabelecimento = ({display, closePress, onSelectItem}) => {
         containerStyle={styles.searchContainer}
         inputContainerStyle={styles.inputContainer}
         inputStyle={styles.input}
-        onChangeText={filterEstabelecimentos}
+        onChangeText={filterClients}
       />
 
       <ItemContainer>
-        {filterEstabelecimento?.map(i => (
+        {filteredClientes?.map(i => (
           <ModalItem key={i.id} onPress={() => selectItem(i)}>
             <Text> {i.name.toUpperCase()} </Text>
           </ModalItem>
@@ -90,10 +111,11 @@ const styles = StyleSheet.create({
   },
 });
 
-SelecionarEstabelecimento.propType = {
+SelecionarCliente.propType = {
   display: propTypes.bool,
   closePress: propTypes.func,
   onSelectItem: propTypes.func,
+  idEstabelecimento: propTypes.number,
 };
 
-export default SelecionarEstabelecimento;
+export default SelecionarCliente;

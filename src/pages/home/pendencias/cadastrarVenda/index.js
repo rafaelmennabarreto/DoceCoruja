@@ -6,6 +6,8 @@ import FormItem from '~/components/formItems';
 import MaskedField from '~/components/maskedField';
 import {DatePicker} from '~/components/datePicker';
 import ConfirmButton from '~/components/buttons';
+import SelecionarEstabelecimentoModal from '~/components/selecionarEstabelecimentoModal';
+import SelecionarClienteModal from '~/components/selecionarClienteModal';
 
 import {IconsNames} from '~/Icons';
 
@@ -13,6 +15,13 @@ import VendasService from '~/service/vendasService';
 const Index = () => {
   const [debit, setDebit] = useState(0);
   const [saleDate, setSaleDate] = useState();
+  const [estabelecimento, setEstabelecimento] = useState();
+  const [
+    displayModalEstabelecimento,
+    setDisplayModalEstabelecimento,
+  ] = useState(false);
+  const [cliente, setCliente] = useState();
+  const [displayClienteModal, setDisplayClienteModal] = useState(false);
 
   const getSaleDate = async () => {
     const date = await DatePicker();
@@ -21,6 +30,17 @@ const Index = () => {
 
   const save = () => {
     const {store} = VendasService;
+  };
+
+  const onSelectEstabelecimento = value => {
+    setEstabelecimento(value);
+    setDisplayModalEstabelecimento(false);
+    setCliente('');
+  };
+
+  const onSelectClient = value => {
+    setCliente(value);
+    setDisplayClienteModal(false);
   };
 
   return (
@@ -49,15 +69,34 @@ const Index = () => {
         <FormItem
           placeHolder="selecionar o estabelecimento"
           iconName={IconsNames.Estabelecimento}
+          value={estabelecimento?.name}
+          disabled={true}
+          onContainerPress={() => setDisplayModalEstabelecimento(true)}
         />
         <FormItem
           placeHolder="selecionar um cliente"
           iconName={IconsNames.Clients}
+          value={cliente?.name}
+          disabled={true}
+          onContainerPress={() => setDisplayClienteModal(true)}
         />
       </MainContainer>
       <ButtonContainer>
         <ConfirmButton title="Salvar" />
       </ButtonContainer>
+
+      <SelecionarEstabelecimentoModal
+        display={displayModalEstabelecimento}
+        closePress={() => setDisplayModalEstabelecimento(false)}
+        onSelectItem={onSelectEstabelecimento}
+      />
+
+      <SelecionarClienteModal
+        display={displayClienteModal}
+        closePress={() => setDisplayClienteModal(false)}
+        onSelectItem={onSelectClient}
+        estabelecimentoId={estabelecimento?.id}
+      />
     </Container>
   );
 };

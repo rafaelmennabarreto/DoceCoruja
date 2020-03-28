@@ -1,8 +1,9 @@
 import React from 'react';
 import {Container, LabelField, ValueField} from './styles';
-// import DisplayMoney from '../../components/MaskMoney/displayMoney';
-import DisplayMoney from '~/components/maskMoney/displayMoney';
-export default function InformationField({title, value, isMonetary = false}) {
+import propTypes from 'prop-types';
+
+import DisplayMoney from '~/components/MaskMoney/displayMoney';
+const InformationField = ({title, value, isMonetary = false}) => {
   return (
     <>
       <Container>
@@ -13,4 +14,12 @@ export default function InformationField({title, value, isMonetary = false}) {
       </Container>
     </>
   );
-}
+};
+
+InformationField.propType = {
+  title: propTypes.string,
+  value: propTypes.number,
+  isMonetary: propTypes.bool,
+};
+
+export default InformationField;
