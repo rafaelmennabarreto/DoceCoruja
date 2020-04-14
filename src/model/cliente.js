@@ -5,6 +5,6 @@ export default class Cliente {
     this.name = name;
     this.telefone = telefone;
     this.email = email;
-    this.createdAt = date;
+    this.createdAt = date?.getTime();
   }
 }

@@ -8,7 +8,7 @@ Telas:
         ✔ realizar chamada @done(20-02-26 16:42)
         ✔ editar @done(20-02-26 16:42)
         ✔ excluir @done(20-02-26 16:42)
-    ☐ filtrar lista por texto
+    ✔ filtrar lista por texto @done(20-04-01 17:20)
     ✔ float button cadastrar @done(20-02-26 16:42)
 
   ☐ caixa
@@ -19,8 +19,8 @@ Telas:
     ☐ implementar o crud na tela de pendencias
 
   cadastrar Vendas:
-    ☐ implementar selecione estabelecimento
-    ☐ implementar selecione cliente
+    ✔ implementar selecione estabelecimento @done(20-04-01 17:20)
+    ✔ implementar selecione cliente @done(20-04-01 17:20)
 
   drawer menu:
     ✔ estabelecimentos @done(20-02-26 16:42)

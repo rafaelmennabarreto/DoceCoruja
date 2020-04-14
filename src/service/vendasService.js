@@ -21,10 +21,12 @@ class VendasService {
 
   async store(venda) {
     try {
-      venda.id = await this.getLasteId();
-      await this._firebaseApp.child(venda.id).set(venda);
-      return venda;
+      const lastId = await this.getLasteId();
+      const vendasToSave = {...venda, id: lastId};
+      await this._firebaseApp.child(vendasToSave.id).set(vendasToSave);
+      return vendasToSave;
     } catch (error) {
+      console.log(error);
       return false;
     }
   }
@@ -49,6 +51,39 @@ class VendasService {
       });
       return data;
     } catch (err) {}
+  }
+
+  async getAllInMonth(filterMonth) {
+    try {
+      const date = filterMonth || new Date();
+      const firstMonthDay = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        1,
+      ).getTime();
+
+      const lasMonthDay = new Date(
+        date.getFullYear(),
+        date.getMonth() + 1,
+        0,
+      ).getTime();
+
+      const data = [];
+
+      await this._firebaseApp
+        .orderByChild('createdAt')
+        .startAt(firstMonthDay)
+        .endAt(lasMonthDay)
+        .once('value', itens => {
+          itens.forEach(item => {
+            data.push(item.val());
+          });
+        });
+
+      return data;
+    } catch (err) {
+      return err;
+    }
   }
 
   async delete(venda) {
