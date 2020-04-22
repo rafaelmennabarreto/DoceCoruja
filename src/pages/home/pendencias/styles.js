@@ -11,4 +11,6 @@ export const DateModal = styled(Modal)`
   flex: 1;
 `;
 
-export const DateText = styled.Text``;
+export const DateText = styled.Text`
+  font-size: 20px;
+`;

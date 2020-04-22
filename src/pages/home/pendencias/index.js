@@ -1,17 +1,18 @@
 import React, {useCallback, useState} from 'react';
+import {TouchableOpacity, View} from 'react-native';
 import {useFocusEffect} from 'react-navigation-hooks';
 import {Container, ListPendencias, DateModal, DateText} from './styles';
 import AppBar from '../../../components/appBar';
 import FloatButtomGroup from '~/components/floatButtomGroup';
 import MonthPicker from 'react-native-month-picker';
-import {Card} from 'react-native-elements';
+import {Card, Text} from 'react-native-elements';
 
 import VendaService from '~/service/vendasService';
 import dateService from '~/service/dateService';
 
 export default function Pendencias() {
   const [selectedMonth, setselectedMonth] = useState(new Date());
-  const [openMonthPicker, setopenMonthPicker] = useState(true);
+  const [openMonthPicker, setopenMonthPicker] = useState(false);
 
   const getAllVendas = async () => {
     const vendas = await VendaService.getAllInMonth();
@@ -24,19 +25,24 @@ export default function Pendencias() {
   useFocusEffect(init);
 
   const onDateChange = date => {
+    console.log(date);
     setselectedMonth(date._d);
-    // setopenMonthPicker(false);
+    setopenMonthPicker(false);
   };
 
   return (
     <Container>
       <AppBar title={'Pendencias'} textAlign="left" showMenuIcon={true} />
-      <Card>
-        <DateText>{dateService.getMonthYearString(selectedMonth)}</DateText>
-      </Card>
+      <TouchableOpacity onPress={() => setopenMonthPicker(true)}>
+        <Card>
+          <View style={{alignItemsgnItems: 'center'}}>
+            <DateText>{dateService.getMonthYearString(selectedMonth)}</DateText>
+          </View>
+        </Card>
+      </TouchableOpacity>
       <ListPendencias />
       <FloatButtomGroup />
-      <DateModal visible={true}>
+      <DateModal visible={openMonthPicker}>
         <MonthPicker
           selectedDate={selectedMonth}
           onMonthChange={onDateChange}
