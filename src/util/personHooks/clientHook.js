@@ -3,40 +3,52 @@ import actionFactory from '~/factory/actionFactory';
 import {Types} from '~/store/ducks/clients';
 
 export const useDispatchOneClient = () => {
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-  return client => {
-    dispatch(
-      actionFactory.generateActionPayload({
-        payload: client,
-        type: Types.ADD_CLIENT,
-      }),
-    );
-  };
+    return client => {
+        dispatch(
+            actionFactory.generateActionPayload({
+                payload: client,
+                type: Types.ADD_CLIENT,
+            }),
+        );
+    };
 };
 
 export const useDispatchSomeClients = () => {
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-  return clients => {
-    dispatch(
-      actionFactory.generateActionPayload({
-        payload: clients,
-        type: Types.ADD_CLIENTS,
-      }),
-    );
-  };
+    return clients => {
+        dispatch(
+            actionFactory.generateActionPayload({
+                payload: clients,
+                type: Types.ADD_CLIENTS,
+            }),
+        );
+    };
+};
+
+export const useDispatchUpdateOneClient = () => {
+    const dispatch = useDispatch();
+
+    return client =>
+        dispatch(
+            actionFactory.generateActionPayload({
+                payload: client,
+                type: Types.UPDATE_CLIENT,
+            }),
+        );
 };
 
 export const useRemoveOneClient = () => {
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-  return clients => {
-    dispatch(
-      actionFactory.generateActionPayload({
-        payload: clients,
-        type: Types.REMOVE_ONE_CLIENT,
-      }),
-    );
-  };
+    return clients => {
+        dispatch(
+            actionFactory.generateActionPayload({
+                payload: clients,
+                type: Types.REMOVE_ONE_CLIENT,
+            }),
+        );
+    };
 };

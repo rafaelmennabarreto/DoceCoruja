@@ -9,6 +9,7 @@ import {Card, Text} from 'react-native-elements';
 import CancelButton from '~/components/CancelButton';
 import ListVendas from '~/components/listVendas';
 import DisplayMoney from '~/components/MaskMoney/displayMoney';
+import Loader from '~/components/loader';
 
 import Pallet from '~/pallet';
 
@@ -20,6 +21,7 @@ export default function Pendencias() {
     const [openMonthPicker, setopenMonthPicker] = useState(false);
     const [vendas, setVendas] = useState([]);
     const [valorTotal, setValorTotal] = useState(0);
+    const [displayLoader, setDisplayLoader] = useState(false);
 
     const getAllVendas = async () => {
         const vendas = await VendaService.getAllInMonth();
@@ -38,9 +40,11 @@ export default function Pendencias() {
     };
 
     const getVendasDataByMonth = async date => {
+        toogleDisplayLoader(true);
         const data = await VendaService.getAllInMonth(date);
         setVendas(data);
         setValorTotal(sumTotalValue(data));
+        toogleDisplayLoader(false);
     };
 
     const sumTotalValue = data => {
@@ -50,6 +54,10 @@ export default function Pendencias() {
             return newArray.reduce((acc, value) => acc + value);
 
         return 0;
+    };
+
+    const toogleDisplayLoader = value => {
+        setDisplayLoader(value);
     };
 
     return (
@@ -90,6 +98,7 @@ export default function Pendencias() {
                     />
                 </View>
             </DateModal>
+            <Loader display={displayLoader} />
         </Container>
     );
 }
