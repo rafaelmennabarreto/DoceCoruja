@@ -9,6 +9,7 @@ import clientService from '~/service/clientService';
 
 import SwipeMenu from '~/components/swipeMenu';
 import IconButton from '~/components/iconButton';
+import {alertWithOptions} from '~/service/alertService';
 
 const ItemContext = createContext(null);
 
@@ -22,12 +23,21 @@ const Buttons = ({item}) => {
   const {navigate} = useNavigation();
 
   function makeCall(number) {
-    const url = `tel:${number}`;
+    const url = `tel:0${number}`;
     Linking.openURL(url);
   }
 
   function goToEdit() {
     navigate('CadastrarCliente', {Cliente: item});
+  }
+
+  function deleteClient(cliente, callBack, isProcessingCallback) {
+    alertWithOptions({
+      title: cliente.name,
+      message: 'Deseja realmente deletar este ciente ?',
+      confirmButtonHandler: remove(cliente, callBack, isProcessingCallback),
+      cancelHandler: () => null,
+    });
   }
 
   async function remove(cliente, callBack, isProcessingCallback) {
@@ -60,7 +70,7 @@ const Buttons = ({item}) => {
             iconName="ios-trash"
             color={Pallet.red700}
             iconColor=""
-            onPress={() => remove(item, onDelete, isProcessing)}
+            onPress={() => deleteClient(item, onDelete, isProcessing)}
           />
         </ButtonContainer>
       )}
@@ -69,11 +79,18 @@ const Buttons = ({item}) => {
 };
 
 const ListClientsComponent = ({item, onDelete, isProcessing}) => {
+  const {navigate} = useNavigation();
+
+  function goToEdit() {
+    navigate('CadastrarCliente', {Cliente: item});
+  }
+
   return (
     <ItemContext.Provider value={{onDelete, isProcessing}}>
       <SwipeMenu
         detailsComponent={<Details item={item} />}
         buttonComponent={<Buttons item={item} />}
+        onTextClick={goToEdit}
       />
     </ItemContext.Provider>
   );

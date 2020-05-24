@@ -5,6 +5,7 @@ import {Container, Text, ButtonContainer, ListButton} from './styles';
 import propTypes from 'prop-types';
 
 import Pallet from '../../pallet';
+import {alertWithOptions} from '~/service/alertService';
 import estabelecimentoService from '~/service/estabelecimentoService';
 
 import SwipeMenu from '../../components/swipeMenu';
@@ -22,12 +23,29 @@ const Buttons = ({item}) => {
   const {navigate} = useNavigation();
 
   function makeCall(number) {
-    const url = `tel:${number}`;
+    const url = `tel:0${number}`;
     Linking.openURL(url);
   }
 
   function goToEdit() {
     navigate('CadastrarEstabelecimentos', {estabelecimento: item});
+  }
+
+  function removeEstabelecimento(
+    estabelecimento,
+    callBack,
+    isProcessingCallback,
+  ) {
+    alertWithOptions({
+      title: estabelecimento.name,
+      message: 'Deseja realmente deletar este estabelecimento ?',
+      confirmButtonHandler: remove(
+        estabelecimento,
+        callBack,
+        isProcessingCallback,
+      ),
+      cancelHandler: () => null,
+    });
   }
 
   async function remove(estabelecimento, callBack, isProcessingCallback) {
@@ -62,7 +80,7 @@ const Buttons = ({item}) => {
             iconName="ios-trash"
             color={Pallet.red700}
             iconColor=""
-            onPress={() => remove(item, onDelete, isProcessing)}
+            onPress={() => removeEstabelecimento(item, onDelete, isProcessing)}
           />
         </ButtonContainer>
       )}
@@ -71,11 +89,18 @@ const Buttons = ({item}) => {
 };
 
 const ListItemComponent = ({item, onDelete, isProcessing}) => {
+  const {navigate} = useNavigation();
+
+  function goToEdit() {
+    navigate('CadastrarEstabelecimentos', {estabelecimento: item});
+  }
+
   return (
     <ItemContext.Provider value={{onDelete, isProcessing}}>
       <SwipeMenu
         detailsComponent={<Details item={item} />}
         buttonComponent={<Buttons item={item} />}
+        onTextClick={goToEdit}
       />
     </ItemContext.Provider>
   );

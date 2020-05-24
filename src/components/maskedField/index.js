@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {TextInput} from './styles';
 import PropTypes from 'prop-types';
 
@@ -6,6 +6,14 @@ import MaskFieldService from './maskFieldService';
 
 const MaskedField = ({style, placeholder, onChange, mask, value}) => {
   const [previouValue, setPreviouValue] = useState('');
+
+  useEffect(useCallback(formatInitialValue, [value]), [value]);
+
+  function formatInitialValue() {
+    if (value) {
+      changeText(value);
+    }
+  }
 
   function changeText(textValue) {
     if (textValue.length < previouValue.length) {
