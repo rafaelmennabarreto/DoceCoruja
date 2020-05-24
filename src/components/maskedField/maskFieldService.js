@@ -1,20 +1,24 @@
-const maskField = mask => {
+const maskField = masks => {
   return value => {
-    if (!mask) {
+    if (!masks) {
       return value;
     }
 
-    let maskToUse = mask;
+    value = value.replace(/,/g, '');
 
-    if (typeof mask === 'object') {
-      mask.sort().every((m, i) => {
+    let maskToUse = masks;
+
+    if (typeof masks === 'object') {
+      masks.sort().every((mask, i) => {
+        const m = mask.replace(/,/g, '');
+
         if (value.length <= m.length) {
-          maskToUse = m;
+          maskToUse = mask;
           return false;
         }
 
-        if (i + 1 === mask.length) {
-          maskToUse = m;
+        if (i + 1 === masks.length) {
+          maskToUse = mask;
           return false;
         }
 

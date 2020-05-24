@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
+import {useNavigation, useFocusEffect} from 'react-navigation-hooks';
 import {Container, MainContainer, ButtonContainer} from './styles';
 
 import AppBar from '~/components/appBar';
@@ -8,175 +9,225 @@ import {DatePicker} from '~/components/datePicker';
 import ConfirmButton from '~/components/buttons';
 import SelecionarEstabelecimentoModal from '~/components/selecionarEstabelecimentoModal';
 import SelecionarClienteModal from '~/components/selecionarClienteModal';
+import IsPaid from '~/components/isPaid';
 import Loader from '~/components/loader';
 
-import {alert} from '~/service/alertService';
+import {alert, alertWithConfirmButton} from '~/service/alertService';
 import vendasFactory from '~/factory/vendasFactory';
 import {IconsNames} from '~/Icons';
 
-import VendasService from '~/service/vendasService';
 import vendasService from '~/service/vendasService';
 const Index = () => {
-    const [debit, setDebit] = useState(0);
-    const [saleDate, setSaleDate] = useState();
-    const [estabelecimento, setEstabelecimento] = useState();
-    const [description, setDescription] = useState('');
-    const [displaLoader, setDisplaLoader] = useState(false);
-    const [
-        displayModalEstabelecimento,
-        setDisplayModalEstabelecimento,
-    ] = useState(false);
-    const [cliente, setCliente] = useState();
-    const [displayClienteModal, setDisplayClienteModal] = useState(false);
+  const [debit, setDebit] = useState(0);
+  const [saleDate, setSaleDate] = useState();
+  const [estabelecimento, setEstabelecimento] = useState();
+  const [description, setDescription] = useState('');
+  const [isPaid, setIsPaid] = useState(undefined);
+  const [displaLoader, setDisplayLoader] = useState(false);
+  const [
+    displayModalEstabelecimento,
+    setDisplayModalEstabelecimento,
+  ] = useState(false);
+  const [cliente, setCliente] = useState();
+  const [displayClienteModal, setDisplayClienteModal] = useState(false);
+  const [title, setTitle] = useState('');
 
-    const getSaleDate = async () => {
-        const date = await DatePicker();
-        setSaleDate(date);
-    };
+  // Editar Venda Options
+  const {goBack} = useNavigation();
+  const vendaParam = useNavigation().getParam('Venda');
 
-    const save = async () => {
-        setDisplaLoader(true);
+  const mapVendaToScreensField = venda => {
+    setDisplayLoader(true);
+    if (venda) {
+      setSaleDate(new Date(venda.saleDate));
+      setDebit(venda.value);
+      setDescription(venda.description);
+      setEstabelecimento(venda.estabelecimento);
+      setCliente(venda.cliente);
+      setIsPaid(venda.isPaid);
+    } else {
+      setIsPaid(false);
+    }
+    setDisplayLoader(false);
+  };
+  const toogleTitle = () => {
+    if (vendaParam) {
+      setTitle('Editar Venda');
+    } else {
+      setTitle('Cadastrar Venda');
+    }
+  };
 
-        if (validateBeforeSave()) {
-            const {generateVendas} = vendasFactory;
+  const init = () => {
+    toogleTitle();
+    mapVendaToScreensField(vendaParam);
+  };
 
-            const venda = generateVendas({
-                value: formatValueToSave(debit),
-                cliente: cliente,
-                estabelecimento,
-                saleDate,
-            });
+  useFocusEffect(useCallback(init, []), []);
 
-            console.log(venda);
+  const getSaleDate = async () => {
+    const date = await DatePicker();
+    setSaleDate(date);
+  };
 
-            const isSaved = await vendasService.store(venda);
+  const save = async () => {
+    setDisplayLoader(true);
 
-            isSaved
-                ? clearFields()
-                : alert({
-                      title: 'Erro',
-                      message:
-                          'Erro ao salvar os dados verifique a conexão com a internet',
-                  });
-        }
+    if (validateBeforeSave()) {
+      const {generateVendas} = vendasFactory;
 
-        setDisplaLoader(false);
-    };
+      const venda = generateVendas({
+        value: formatValueToSave(debit),
+        cliente: cliente,
+        estabelecimento,
+        description,
+        saleDate,
+        isPaid,
+      });
 
-    const onSelectEstabelecimento = value => {
-        setEstabelecimento(value);
-        setDisplayModalEstabelecimento(false);
-        setCliente('');
-    };
+      const isSaved = persistData(venda);
 
-    const onSelectClient = value => {
-        setCliente(value);
-        setDisplayClienteModal(false);
-    };
+      if (isSaved && !vendaParam) {
+        clearFields();
+      }
 
-    const validateBeforeSave = () => {
-        const message = [];
+      isSaved &&
+        alertWithConfirmButton({
+          title: 'Venda salva',
+          message: 'Venda salva com Sucess',
+          confirmButtonHandler: () => goBack(),
+        });
 
-        if (!debit) {
-            message.push('- Favor preencher o valor da venda \n');
-        }
+      !isSaved &&
+        alert({
+          title: 'Erro',
+          message:
+            'Erro ao salvar os dados verifique a conexão com a internet',
+        });
+    }
+    setDisplayLoader(false);
+  };
 
-        if (!saleDate) {
-            message.push(
-                '- Favor informar a data que a venda foi realizada \n',
-            );
-        }
+  const persistData = async venda => {
+    if (vendaParam) {
+      return await vendasService.update({...venda, id: vendaParam.id});
+    }
+    return await vendasService.store(venda);
+  };
 
-        if (!cliente) {
-            message.push('- Favor selecionar um cliente para cadastar a venda');
-        }
+  const onSelectEstabelecimento = value => {
+    setEstabelecimento(value);
+    setDisplayModalEstabelecimento(false);
+    setCliente('');
+  };
 
-        const isValid = message.length === 0;
-        const concatMessage = message.join().replace(/,/g, '');
+  const onSelectClient = value => {
+    setCliente(value);
+    setDisplayClienteModal(false);
+  };
 
-        if (!isValid) {
-            alert({
-                title: 'Campos em branco',
-                message: concatMessage,
-            });
-        }
+  const validateBeforeSave = () => {
+    const message = [];
 
-        return isValid;
-    };
+    if (!debit) {
+      message.push('- Favor preencher o valor da venda \n');
+    }
 
-    const clearFields = () => {
-        setSaleDate('');
-        setDebit('');
-        setDescription('');
-        setEstabelecimento('');
-        setCliente('');
-    };
+    if (!saleDate) {
+      message.push('- Favor informar a data que a venda foi realizada \n');
+    }
 
-    const formatValueToSave = value => {
-        return value.replace(/,/g, '');
-    };
+    if (!cliente) {
+      message.push('- Favor selecionar um cliente para cadastar a venda');
+    }
 
-    return (
-        <Container>
-            <AppBar title="Cadastrar Venda" showBackIcon={true} />
-            <MainContainer>
-                <FormItem iconName={IconsNames.Money}>
-                    <MaskedField
-                        mask={['9,99', '99,99', '999,99', '9999,99']}
-                        value={debit}
-                        placeholder="ex .: 50,00"
-                        onChange={value => setDebit(value)}
-                    />
-                </FormItem>
-                <FormItem
-                    placeHolder="clique para selecionar a data"
-                    iconName={IconsNames.Date}
-                    onContainerPress={getSaleDate}
-                    value={saleDate ? saleDate.toLocaleDateString() : ''}
-                    disabled={true}
-                />
-                <FormItem
-                    placeHolder="ex.: Enroladinho"
-                    iconName={IconsNames.Description}
-                    value={description}
-                    onChange={val => setDescription(val)}
-                />
-                <FormItem
-                    placeHolder="selecionar o estabelecimento"
-                    iconName={IconsNames.Estabelecimento}
-                    value={estabelecimento?.name}
-                    disabled={true}
-                    onContainerPress={() =>
-                        setDisplayModalEstabelecimento(true)
-                    }
-                />
-                <FormItem
-                    placeHolder="selecionar um cliente"
-                    iconName={IconsNames.Clients}
-                    value={cliente?.name}
-                    disabled={true}
-                    onContainerPress={() => setDisplayClienteModal(true)}
-                />
-            </MainContainer>
-            <ButtonContainer>
-                <ConfirmButton title="Salvar" onPress={save} />
-            </ButtonContainer>
+    const isValid = message.length === 0;
+    const concatMessage = message.join().replace(/,/g, '');
 
-            <SelecionarEstabelecimentoModal
-                display={displayModalEstabelecimento}
-                closePress={() => setDisplayModalEstabelecimento(false)}
-                onSelectItem={onSelectEstabelecimento}
-            />
+    if (!isValid) {
+      alert({
+        title: 'Campos em branco',
+        message: concatMessage,
+      });
+    }
 
-            <SelecionarClienteModal
-                display={displayClienteModal}
-                closePress={() => setDisplayClienteModal(false)}
-                onSelectItem={onSelectClient}
-                estabelecimentoId={estabelecimento?.id}
-            />
-            <Loader display={displaLoader} />
-        </Container>
-    );
+    return isValid;
+  };
+
+  const clearFields = () => {
+    setSaleDate('');
+    setDebit('');
+    setDescription('');
+    setEstabelecimento('');
+    setCliente('');
+    setIsPaid(false);
+  };
+
+  const formatValueToSave = value => {
+    return value.replace(/,/g, '');
+  };
+
+  return (
+    <Container>
+      <AppBar title={title} showBackIcon={true} />
+      <MainContainer>
+        <FormItem iconName={IconsNames.Money}>
+          <MaskedField
+            mask={['9,99', '99,99', '999,99', '9999,99']}
+            value={debit}
+            placeholder="ex .: 50,00"
+            onChange={value => setDebit(value)}
+          />
+        </FormItem>
+        <FormItem
+          placeHolder="clique para selecionar a data"
+          iconName={IconsNames.Date}
+          onContainerPress={getSaleDate}
+          value={saleDate ? saleDate.toLocaleDateString() : ''}
+          disabled={true}
+        />
+        <FormItem
+          placeHolder="ex.: Enroladinho"
+          iconName={IconsNames.Description}
+          value={description}
+          onChange={val => setDescription(val)}
+        />
+        <FormItem
+          placeHolder="selecionar o estabelecimento"
+          iconName={IconsNames.Estabelecimento}
+          value={estabelecimento?.name}
+          disabled={true}
+          onContainerPress={() => setDisplayModalEstabelecimento(true)}
+        />
+        <FormItem
+          placeHolder="selecionar um cliente"
+          iconName={IconsNames.Clients}
+          value={cliente?.name}
+          disabled={true}
+          onContainerPress={() => setDisplayClienteModal(true)}
+        />
+
+        <IsPaid isPaid={isPaid} onPress={setIsPaid} />
+      </MainContainer>
+      <ButtonContainer>
+        <ConfirmButton title="Salvar" onPress={save} />
+      </ButtonContainer>
+
+      <SelecionarEstabelecimentoModal
+        display={displayModalEstabelecimento}
+        closePress={() => setDisplayModalEstabelecimento(false)}
+        onSelectItem={onSelectEstabelecimento}
+      />
+
+      <SelecionarClienteModal
+        display={displayClienteModal}
+        closePress={() => setDisplayClienteModal(false)}
+        onSelectItem={onSelectClient}
+        estabelecimentoId={estabelecimento?.id}
+      />
+      <Loader display={displaLoader} />
+    </Container>
+  );
 };
 
 export default Index;

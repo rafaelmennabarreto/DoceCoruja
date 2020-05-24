@@ -1,36 +1,17 @@
-Telas:
-  ✔ Splash @done(20-01-03 15:47)
-  ☐ Home
-  ✔ clientes @done(20-02-26 16:43)
-  estabelecimentos:
-    ✔ listagem estabelecimentos @done(20-02-26 16:42)
-      opcoes por estabelecimento:
-        ✔ realizar chamada @done(20-02-26 16:42)
-        ✔ editar @done(20-02-26 16:42)
-        ✔ excluir @done(20-02-26 16:42)
-    ✔ filtrar lista por texto @done(20-04-01 17:20)
-    ✔ float button cadastrar @done(20-02-26 16:42)
+validacoes : 
+ 
+geral:
+  swipeComponent:
+    ☐ quando abrir um tem que fechar o outro;
 
-  ☐ caixa
-  ☐ registro
-  pendencias:      
-    ✔ form de cadastro de venda @done(20-02-27 13:45)
-    ✔ service de vendas para comunicar com firebase @done(20-02-27 13:45)
-    ☐ implementar o crud na tela de pendencias
+comportamento:
+  Venda:
+    ☐ formatar a data de venda DD/MM/AA
 
-  cadastrar Vendas:
-    ✔ implementar selecione estabelecimento @done(20-04-01 17:20)
-    ✔ implementar selecione cliente @done(20-04-01 17:20)
-
-  drawer menu:
-    ✔ estabelecimentos @done(20-02-26 16:42)
-    ✔ cliente @done(20-02-26 16:42)
-    ✔ caixa @done(20-02-26 16:42)
-    ✔ registro @done(20-02-26 16:42)
-    ✔ pendencias @done(20-02-26 16:42)
-    ✔ quando usuario não tiver foto colocar uma imagem default. @done(20-03-25 11:16)
-
-
+  Cliente e estabelecimento :
+    ☐ abrir edição ao clicar no nome
+    ☐ ao deletar solicitar confirmação
+    ✔ problema ao chamar pelo app @done(20-05-24 18:10)
 
 
 

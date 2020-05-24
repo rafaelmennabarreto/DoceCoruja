@@ -5,12 +5,8 @@ import {useNavigation} from 'react-navigation-hooks';
 import {Container, Text} from './styles';
 import {BackIcon, MenuIcon} from '../../Icons';
 
-/**
- *
- * @param {boolean} showBackIcon
- */
 const AppBar = props => {
-  const {toggleDrawer, goBack} = useNavigation();
+  const {toggleDrawer, goBack, navigate} = useNavigation();
 
   return (
     <Container style={styles.boxShadow}>

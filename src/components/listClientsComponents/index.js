@@ -22,7 +22,7 @@ const Buttons = ({item}) => {
   const {navigate} = useNavigation();
 
   function makeCall(number) {
-    const url = `tel:${number}`;
+    const url = `tel:0${number}`;
     Linking.openURL(url);
   }
 
@@ -69,11 +69,18 @@ const Buttons = ({item}) => {
 };
 
 const ListClientsComponent = ({item, onDelete, isProcessing}) => {
+  const {navigate} = useNavigation();
+
+  function goToEdit() {
+    navigate('CadastrarCliente', {Cliente: item});
+  }
+
   return (
     <ItemContext.Provider value={{onDelete, isProcessing}}>
       <SwipeMenu
         detailsComponent={<Details item={item} />}
         buttonComponent={<Buttons item={item} />}
+        onTextClick={goToEdit}
       />
     </ItemContext.Provider>
   );
