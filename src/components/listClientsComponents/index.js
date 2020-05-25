@@ -35,7 +35,8 @@ const Buttons = ({item}) => {
     alertWithOptions({
       title: cliente.name,
       message: 'Deseja realmente deletar este ciente ?',
-      confirmButtonHandler: remove(cliente, callBack, isProcessingCallback),
+      confirmButtonHandler: () =>
+        remove(cliente, callBack, isProcessingCallback),
       cancelHandler: () => null,
     });
   }

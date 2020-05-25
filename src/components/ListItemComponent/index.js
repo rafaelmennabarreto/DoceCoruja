@@ -39,11 +39,8 @@ const Buttons = ({item}) => {
     alertWithOptions({
       title: estabelecimento.name,
       message: 'Deseja realmente deletar este estabelecimento ?',
-      confirmButtonHandler: remove(
-        estabelecimento,
-        callBack,
-        isProcessingCallback,
-      ),
+      confirmButtonHandler: () =>
+        remove(estabelecimento, callBack, isProcessingCallback),
       cancelHandler: () => null,
     });
   }
