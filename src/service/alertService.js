@@ -11,3 +11,15 @@ export const alertWithConfirmButton = ({
     {text: 'Confirmar', onPress: confirmButtonHandler},
   ]);
 };
+
+export const alertWithOptions = ({
+  title,
+  message,
+  confirmButtonHandler,
+  cancelHandler,
+}) => {
+  Alert.alert(title, message, [
+    {text: 'Confirmar', onPress: confirmButtonHandler},
+    {text: 'Cancelar', onPress: cancelHandler},
+  ]);
+};
