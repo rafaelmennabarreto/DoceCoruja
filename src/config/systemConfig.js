@@ -1,6 +1,6 @@
 class Config {
   get fontSize() {
-    return 18;
+    return '18px';
   }
 }
 
