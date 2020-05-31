@@ -10,6 +10,7 @@ import {
   ModalItemContainer,
   CustomText,
   CloseButtonContainer,
+  CustomTextModal,
 } from './styles';
 import CancelButton from '~/components/CancelButton';
 import propTypes from 'prop-types';
@@ -96,9 +97,9 @@ const ListClientsComponent = ({item, onDelete, isProcessing}) => {
         </Container>
       </TouchableOpacity>
       <CustomModal visible={display} transparent animationType="fade">
-        <ModalContainer onPress={() => setDisplay(false)}>
+        <ModalContainer onTouchEnd={() => setDisplay(false)}>
           <ModalItemContainer>
-            <CustomText> {item.name} </CustomText>
+            <CustomTextModal> {item.name} </CustomTextModal>
             <Buttons />
             <CloseButton />
           </ModalItemContainer>

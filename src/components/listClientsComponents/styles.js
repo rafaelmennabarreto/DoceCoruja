@@ -12,6 +12,8 @@ export const Container = styled.View`
 
 export const ButtonContainer = styled.View`
   flex-direction: column;
+  height: 160px;
+  justify-content: space-between;
 `;
 
 export const CustomModal = styled.Modal``;
@@ -21,6 +23,10 @@ export const CustomText = styled.Text`
   font-weight: 900;
 `;
 
+export const CustomTextModal = styled.Text`
+  font-size: 26px;
+  font-weight: 900;
+`;
 export const ModalContainer = styled.View`
   flex: 1;
   justify-content: flex-end;
@@ -34,6 +40,7 @@ export const ModalItemContainer = styled.View`
   justify-content: space-between;
   min-height: ${WindowHeight * 0.35};
   border-radius: 10px;
+  z-index: 15;
 `;
 
 export const CloseButtonContainer = styled.TouchableOpacity`
