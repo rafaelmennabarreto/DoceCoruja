@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Linking, TouchableOpacity, Button} from 'react-native';
+import {BackHandler, Linking, TouchableOpacity, Button} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from 'react-navigation-hooks';
 import {
@@ -96,8 +96,12 @@ const ListClientsComponent = ({item, onDelete, isProcessing}) => {
           <CustomText>{item.name}</CustomText>
         </Container>
       </TouchableOpacity>
-      <CustomModal visible={display} transparent animationType="fade">
-        <ModalContainer onTouchEnd={() => setDisplay(false)}>
+      <CustomModal
+        visible={display}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setDisplay(false)}>
+        <ModalContainer>
           <ModalItemContainer>
             <CustomTextModal> {item.name} </CustomTextModal>
             <Buttons />

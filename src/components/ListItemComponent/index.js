@@ -1,25 +1,27 @@
-import React, {useContext, createContext} from 'react';
-import {Linking} from 'react-native';
+import React, {useState} from 'react';
+import {Linking, TouchableOpacity} from 'react-native';
 import {useNavigation} from 'react-navigation-hooks';
-import {Container, Text, ButtonContainer, ListButton} from './styles';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {
+  Container,
+  ButtonContainer,
+  CloseButtonContainer,
+  CustomModal,
+  CustomText,
+  CustomTextModal,
+  ModalContainer,
+  ModalItemContainer,
+} from './styles';
 import propTypes from 'prop-types';
 
 import Pallet from '../../pallet';
 import {alertWithOptions} from '~/service/alertService';
 import estabelecimentoService from '~/service/estabelecimentoService';
 
-import SwipeMenu from '../../components/swipeMenu';
 import IconButton from '../../components/iconButton';
 
-const ItemContext = createContext(null);
-
-const Details = ({item}) => (
-  <Container>
-    <Text>{item.name.toUpperCase()}</Text>
-  </Container>
-);
-
-const Buttons = ({item}) => {
+const ListItemComponent = ({item, onDelete, isProcessing}) => {
+  const [display, setDisplay] = useState(false);
   const {navigate} = useNavigation();
 
   function makeCall(number) {
@@ -59,47 +61,57 @@ const Buttons = ({item}) => {
     // callBack(estabelecimento);
   }
 
-  return (
-    <ItemContext.Consumer>
-      {({onDelete, isProcessing}) => (
-        <ButtonContainer>
-          <IconButton
-            iconName="ios-call"
-            color={Pallet.secondaryColor}
-            onPress={() => makeCall(item.phone)}
-          />
-          <IconButton
-            iconName="ios-create"
-            color={Pallet.green500}
-            onPress={goToEdit}
-          />
-          <IconButton
-            iconName="ios-trash"
-            color={Pallet.red700}
-            iconColor=""
-            onPress={() => removeEstabelecimento(item, onDelete, isProcessing)}
-          />
-        </ButtonContainer>
-      )}
-    </ItemContext.Consumer>
-  );
-};
-
-const ListItemComponent = ({item, onDelete, isProcessing}) => {
-  const {navigate} = useNavigation();
-
-  function goToEdit() {
-    navigate('CadastrarEstabelecimentos', {estabelecimento: item});
-  }
-
-  return (
-    <ItemContext.Provider value={{onDelete, isProcessing}}>
-      <SwipeMenu
-        detailsComponent={<Details item={item} />}
-        buttonComponent={<Buttons item={item} />}
-        onTextClick={goToEdit}
+  const Buttons = () => (
+    <ButtonContainer>
+      <IconButton
+        iconName="ios-call"
+        color={Pallet.secondaryColor}
+        text="Chamar"
+        onPress={() => makeCall(item.telefone)}
       />
-    </ItemContext.Provider>
+      <IconButton
+        iconName="ios-create"
+        color={Pallet.green500}
+        text="Editar"
+        onPress={goToEdit}
+      />
+      <IconButton
+        iconName="ios-trash"
+        color={Pallet.red700}
+        text="Deletar"
+        iconColor=""
+        onPress={() => removeEstabelecimento(item, onDelete, isProcessing)}
+      />
+    </ButtonContainer>
+  );
+
+  const CloseButton = () => (
+    <CloseButtonContainer onPress={() => setDisplay(false)}>
+      <Icon name="ios-close" size={38} color="white" />
+    </CloseButtonContainer>
+  );
+
+  return (
+    <>
+      <TouchableOpacity onLongPress={goToEdit} onPress={() => setDisplay(true)}>
+        <Container>
+          <CustomText>{item.name}</CustomText>
+        </Container>
+      </TouchableOpacity>
+      <CustomModal
+        visible={display}
+        transparent
+        animationType="slide"
+        onRequestClose={() => setDisplay(false)}>
+        <ModalContainer>
+          <ModalItemContainer>
+            <CustomTextModal> {item.name} </CustomTextModal>
+            <Buttons />
+            <CloseButton />
+          </ModalItemContainer>
+        </ModalContainer>
+      </CustomModal>
+    </>
   );
 };
 
