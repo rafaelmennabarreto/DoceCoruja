@@ -2,15 +2,15 @@ validacoes :
  
 geral:
   swipeComponent:
-    ☐ quando abrir um tem que fechar o outro;
+    ☐ quando abrir um tem que fechar o outro(verificar se pode ser feito de outra forma);
 
 comportamento:
   Venda:
     ☐ formatar a data de venda DD/MM/AA
 
   Cliente e estabelecimento :
-    ☐ abrir edição ao clicar no nome
-    ☐ ao deletar solicitar confirmação
+    ✔ abrir edição ao clicar no nome @done(20-06-01 17:19)
+    ✔ ao deletar solicitar confirmação @done(20-06-01 17:19)
     ✔ problema ao chamar pelo app @done(20-05-24 18:10)
 
 

@@ -14,6 +14,7 @@ import Loader from '~/components/loader';
 
 import {alert, alertWithConfirmButton} from '~/service/alertService';
 import vendasFactory from '~/factory/vendasFactory';
+import DateUtils from '~/util/dataUtil';
 import {IconsNames} from '~/Icons';
 
 import vendasService from '~/service/vendasService';
@@ -183,7 +184,7 @@ const Index = () => {
           placeHolder="clique para selecionar a data"
           iconName={IconsNames.Date}
           onContainerPress={getSaleDate}
-          value={saleDate ? saleDate.toLocaleDateString() : ''}
+          value={DateUtils.getBrFormatedDateString(saleDate)}
           disabled={true}
         />
         <FormItem
