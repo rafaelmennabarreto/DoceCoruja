@@ -19,6 +19,7 @@ export default function Clientes() {
   const dispatchSomeClients = useDispatchSomeClients();
   const removeOneClient = useRemoveOneClient();
   const load = useCallback(init, []);
+  const [activeItem, setActiveItem] = useState('');
 
   useFocusEffect(load);
 
@@ -37,6 +38,10 @@ export default function Clientes() {
     setLoading(false);
   }
 
+  function setActiveItemHandler(item) {
+    setActiveItem(item);
+  }
+
   return (
     <Container>
       <AppBar title={'Clientes'} textAlign="left" showMenuIcon={true} />
@@ -49,6 +54,8 @@ export default function Clientes() {
             item={item}
             onDelete={removeOneClient}
             isProcessing={setLoading}
+            activeItem={activeItem}
+            setActiveItem={setActiveItemHandler}
           />
         )}
       />

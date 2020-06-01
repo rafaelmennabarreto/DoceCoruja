@@ -1,33 +1,38 @@
-import React, {createContext} from 'react';
-import {Linking} from 'react-native';
+import React, {useState} from 'react';
+import {BackHandler, Linking, TouchableOpacity, Button} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from 'react-navigation-hooks';
-import {Container, Text, ButtonContainer} from './styles';
+import {
+  Container,
+  ButtonContainer,
+  CustomModal,
+  ModalContainer,
+  ModalItemContainer,
+  CustomText,
+  CloseButtonContainer,
+  CustomTextModal,
+} from './styles';
+import CancelButton from '~/components/CancelButton';
 import propTypes from 'prop-types';
 
 import Pallet from '~/pallet';
 import clientService from '~/service/clientService';
 
-import SwipeMenu from '~/components/swipeMenu';
 import IconButton from '~/components/iconButton';
 import {alertWithOptions} from '~/service/alertService';
 
-const ItemContext = createContext(null);
-
-const Details = ({item}) => (
-  <Container>
-    <Text>{item.name.toUpperCase()}</Text>
-  </Container>
-);
-
-const Buttons = ({item}) => {
+const ListClientsComponent = ({item, onDelete, isProcessing}) => {
   const {navigate} = useNavigation();
+  const [display, setDisplay] = useState(false);
 
   function makeCall(number) {
     const url = `tel:0${number}`;
+    setDisplay(false);
     Linking.openURL(url);
   }
 
   function goToEdit() {
+    setDisplay(false);
     navigate('CadastrarCliente', {Cliente: item});
   }
 
@@ -50,50 +55,61 @@ const Buttons = ({item}) => {
       isProcessingCallback(false);
     }
 
+    setDisplay(false);
     isProcessingCallback && isProcessingCallback(false);
   }
 
-  return (
-    <ItemContext.Consumer>
-      {({onDelete, isProcessing}) => (
-        <ButtonContainer>
-          <IconButton
-            iconName="ios-call"
-            color={Pallet.secondaryColor}
-            onPress={() => makeCall(item.telefone)}
-          />
-          <IconButton
-            iconName="ios-create"
-            color={Pallet.green500}
-            onPress={goToEdit}
-          />
-          <IconButton
-            iconName="ios-trash"
-            color={Pallet.red700}
-            iconColor=""
-            onPress={() => deleteClient(item, onDelete, isProcessing)}
-          />
-        </ButtonContainer>
-      )}
-    </ItemContext.Consumer>
-  );
-};
-
-const ListClientsComponent = ({item, onDelete, isProcessing}) => {
-  const {navigate} = useNavigation();
-
-  function goToEdit() {
-    navigate('CadastrarCliente', {Cliente: item});
-  }
-
-  return (
-    <ItemContext.Provider value={{onDelete, isProcessing}}>
-      <SwipeMenu
-        detailsComponent={<Details item={item} />}
-        buttonComponent={<Buttons item={item} />}
-        onTextClick={goToEdit}
+  const Buttons = () => (
+    <ButtonContainer>
+      <IconButton
+        iconName="ios-call"
+        color={Pallet.secondaryColor}
+        text="Chamar"
+        onPress={() => makeCall(item.telefone)}
       />
-    </ItemContext.Provider>
+      <IconButton
+        iconName="ios-create"
+        color={Pallet.green500}
+        text="Editar"
+        onPress={goToEdit}
+      />
+      <IconButton
+        iconName="ios-trash"
+        color={Pallet.red700}
+        text="Deletar"
+        iconColor=""
+        onPress={() => deleteClient(item, onDelete, isProcessing)}
+      />
+    </ButtonContainer>
+  );
+
+  const CloseButton = () => (
+    <CloseButtonContainer onPress={() => setDisplay(false)}>
+      <Icon name="ios-close" size={38} color="white" />
+    </CloseButtonContainer>
+  );
+
+  return (
+    <>
+      <TouchableOpacity onLongPress={goToEdit} onPress={() => setDisplay(true)}>
+        <Container>
+          <CustomText>{item.name}</CustomText>
+        </Container>
+      </TouchableOpacity>
+      <CustomModal
+        visible={display}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setDisplay(false)}>
+        <ModalContainer>
+          <ModalItemContainer>
+            <CustomTextModal> {item.name} </CustomTextModal>
+            <Buttons />
+            <CloseButton />
+          </ModalItemContainer>
+        </ModalContainer>
+      </CustomModal>
+    </>
   );
 };
 

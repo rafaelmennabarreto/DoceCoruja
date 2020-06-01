@@ -1,20 +1,31 @@
-import React, {useState, useRef} from 'react';
-import {PanResponder, Dimensions, TouchableOpacity} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {PanResponder, Dimensions} from 'react-native';
 import propTypes from 'prop-types';
 import {
   Container,
   OptionsContainer,
   OptionsCoverContainer,
-  Text,
   ButtonContainer,
 } from './styles';
 
 const {width} = Dimensions.get('window');
-const SwipeMenu = ({buttonComponent, detailsComponent, onTextClick}) => {
+const SwipeMenu = ({
+  buttonComponent,
+  detailsComponent,
+  onTextClick,
+  isActive,
+  onTouchStart,
+}) => {
   const [clickPosition, setClickPosition] = useState(0);
   const [marginRight, setMarginRight] = useState(0);
   const [maxSize, setMaxSize] = useState(width);
   const [allowClick, setAllowClick] = useState(true);
+
+  useEffect(() => {
+    if (!isActive) {
+      setMarginRight(0);
+    }
+  }, [isActive]);
 
   const _panResponder = PanResponder.create({
     onStartShouldSetPanResponder: (event, gestureState) => true,
@@ -56,7 +67,7 @@ const SwipeMenu = ({buttonComponent, detailsComponent, onTextClick}) => {
   };
 
   return (
-    <Container {..._panResponder.panHandlers}>
+    <Container {..._panResponder.panHandlers} onTouchStart={onTouchStart}>
       <OptionsCoverContainer style={{right: marginRight}} onTouchEnd={onPress}>
         {detailsComponent}
       </OptionsCoverContainer>
@@ -74,6 +85,8 @@ SwipeMenu.propTypes = {
   buttonComponent: propTypes.element,
   detailsComponent: propTypes.element,
   onTextClick: propTypes.func,
+  isActive: propTypes.number,
+  onTouchStart: propTypes.func,
 };
 
 export default SwipeMenu;

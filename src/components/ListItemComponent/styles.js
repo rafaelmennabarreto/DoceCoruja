@@ -1,18 +1,59 @@
 import styled from 'styled-components/native';
 import Config from '../../config/systemConfig';
+import {Dimensions} from 'react-native';
+
+const {height: WindowHeight, width: WindowWidth} = Dimensions.get('window');
 
 export const Container = styled.View`
   width: 100%;
-  padding: 10px;
+  padding: 12px 2px;
   border-bottom-width: 1px;
 `;
 
 export const ButtonContainer = styled.View`
-  flex: 1;
-  flex-direction: row;
+  flex-direction: column;
+  height: 160px;
+  justify-content: space-between;
 `;
 
-export const Text = styled.Text`
+export const CustomModal = styled.Modal``;
+
+export const CustomText = styled.Text`
   font-size: ${Config.fontSize};
   font-weight: 900;
+`;
+
+export const CustomTextModal = styled.Text`
+  font-size: 26px;
+  max-width: ${WindowWidth * 0.9};
+  text-align: left;
+  padding: 10px 5px;
+  font-weight: 900;
+`;
+export const ModalContainer = styled.View`
+  flex: 1;
+  justify-content: flex-end;
+  height: ${WindowHeight};
+  background: rgba(0, 0, 0, 0);
+`;
+
+export const ModalItemContainer = styled.View`
+  flex-direction: column;
+  background: white;
+  justify-content: space-between;
+  min-height: ${WindowHeight * 0.35};
+  border-radius: 10px;
+  z-index: 15;
+`;
+
+export const CloseButtonContainer = styled.TouchableOpacity`
+  position: absolute;
+  right: -1;
+  top: -6;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 30px;
+  background: black;
 `;

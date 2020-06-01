@@ -8,7 +8,7 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "serve": "concurrently \"yarn run start\" \"yarn run android\" ",
+    "dev": "concurrently \"yarn run start\" \"yarn run android\" ",
     "publish": "cd android && ./gradlew assembleRelease",
     "bundle": "cd android && ./gradlew bundleRelease",
     "prod": "react-native run-android --variant=release",
