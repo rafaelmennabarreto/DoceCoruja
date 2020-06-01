@@ -3,7 +3,7 @@ function DateUtils() {
     if (date) {
       const day = date.getDay() > 10 ? date.getDay() : `0${date.getDay()}`;
       const month =
-        date.getMonth() > 10 ? date.getMonth() : `0${date.getMonth()}`;
+        date.getMonth() > 10 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`;
       const year = date.getFullYear();
 
       return `${day}/${month}/${year}`;

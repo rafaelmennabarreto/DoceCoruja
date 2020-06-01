@@ -68,9 +68,6 @@ const Index = () => {
 
   const getSaleDate = async () => {
     const date = await DatePicker();
-
-    console.log(date.getDay());
-
     setSaleDate(date);
   };
 

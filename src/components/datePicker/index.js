@@ -6,8 +6,6 @@ export const DatePicker = async () => {
     date: new Date(),
   });
 
-  console.log(datePicked);
-
   return datePicked.day
     ? new Date(datePicked.year, datePicked.month, datePicked.day)
     : '';
