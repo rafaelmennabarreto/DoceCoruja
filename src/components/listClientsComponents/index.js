@@ -99,7 +99,7 @@ const ListClientsComponent = ({item, onDelete, isProcessing}) => {
       <CustomModal
         visible={display}
         transparent
-        animationType="fade"
+        animationType="slide"
         onRequestClose={() => setDisplay(false)}>
         <ModalContainer>
           <ModalItemContainer>

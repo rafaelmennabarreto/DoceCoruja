@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 import Config from '../../config/systemConfig';
 import {Dimensions} from 'react-native';
 
-const {height: WindowHeight} = Dimensions.get('window');
+const {height: WindowHeight, width: WindowWidth} = Dimensions.get('window');
 
 export const Container = styled.View`
   width: 100%;
@@ -25,13 +25,16 @@ export const CustomText = styled.Text`
 
 export const CustomTextModal = styled.Text`
   font-size: 26px;
+  max-width: ${WindowWidth * 0.9};
+  text-align: left;
+  padding: 10px 5px;
   font-weight: 900;
 `;
 export const ModalContainer = styled.View`
   flex: 1;
   justify-content: flex-end;
   height: ${WindowHeight};
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0);
 `;
 
 export const ModalItemContainer = styled.View`
